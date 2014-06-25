@@ -2,7 +2,7 @@
  <package>
    <metadata>
      <id>Conekta</id>
-     <version></version>
+     <version>$version$</version>
      <authors>Boris Scheiman</authors>
      <licenseUrl/>
      <projectUrl>https://github.com/bscheiman/conekta</projectUrl>
