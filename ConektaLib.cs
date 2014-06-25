@@ -15,6 +15,9 @@ namespace Conekta {
         public string PublicKey { get; set; }
 
         public ConektaLib(string key) {
+            if (string.IsNullOrEmpty(key))
+                throw new InvalidKeyException("PublicKey hasn't been set.");
+
             JsConfig.IncludeNullValues = false;
             JsConfig.IncludePublicFields = true;
 
@@ -22,16 +25,25 @@ namespace Conekta {
         }
 
         public Subscription CancelSubscription(string clientId) {
+            if (string.IsNullOrEmpty(PublicKey))
+                throw new InvalidKeyException("PublicKey hasn't been set.");
+
             return Post(string.Format("customers/{0}/subscription/cancel", clientId)).FromJson<Subscription>();
         }
 
         public Subscription ChangeSubscription(string clientId, string plan) {
+            if (string.IsNullOrEmpty(PublicKey))
+                throw new InvalidKeyException("PublicKey hasn't been set.");
+
             return Post(string.Format("customers/{0}/subscription", clientId), new {
                 plan
             }).FromJson<Subscription>();
         }
 
         public Charge Charge(string cardId, float amount, string currency = "MXN", string description = "") {
+            if (string.IsNullOrEmpty(PublicKey))
+                throw new InvalidKeyException("PublicKey hasn't been set.");
+
             return Post("charges", new {
                 description,
                 amount = amount * 100,
@@ -42,6 +54,9 @@ namespace Conekta {
 
         public ClientResponse CreateClient(string name, string email, string phone = null, string[] cards = null, string plan = null,
             string billingAddress = null, string shippingAddress = null, string rfc = null) {
+            if (string.IsNullOrEmpty(PublicKey))
+                throw new InvalidKeyException("PublicKey hasn't been set.");
+
             return Post("customers", new {
                 name,
                 email,
@@ -55,6 +70,9 @@ namespace Conekta {
 
         public Subscription CreatePlan(string plan, string name, int amount, string currency = "MXN", string interval = "month",
             int trial = 7, int frequency = 1, int expiry = 3) {
+            if (string.IsNullOrEmpty(PublicKey))
+                throw new InvalidKeyException("PublicKey hasn't been set.");
+
             if (SubscriptionExists(plan)) {
                 return new Subscription {
                     Id = plan
@@ -74,26 +92,44 @@ namespace Conekta {
         }
 
         public bool DeleteClient(string clientId) {
+            if (string.IsNullOrEmpty(PublicKey))
+                throw new InvalidKeyException("PublicKey hasn't been set.");
+
             return Delete(string.Format("/customers/{0}", clientId)).FromJson<ClientResponse>().Deleted;
         }
 
         public ClientResponse GetClient(string clientId) {
+            if (string.IsNullOrEmpty(PublicKey))
+                throw new InvalidKeyException("PublicKey hasn't been set.");
+
             return Get(string.Format("customers/{0}", clientId)).FromJson<ClientResponse>();
         }
 
         public Subscription PauseSubscription(string clientId) {
+            if (string.IsNullOrEmpty(PublicKey))
+                throw new InvalidKeyException("PublicKey hasn't been set.");
+
             return Post(string.Format("customers/{0}/subscription/pause", clientId)).FromJson<Subscription>();
         }
 
         public Charge Refund(string chargeId) {
+            if (string.IsNullOrEmpty(PublicKey))
+                throw new InvalidKeyException("PublicKey hasn't been set.");
+
             return Post(string.Format("charges/{0}/refund", chargeId)).FromJson<Charge>();
         }
 
         public Subscription ResumeSubscription(string clientId) {
+            if (string.IsNullOrEmpty(PublicKey))
+                throw new InvalidKeyException("PublicKey hasn't been set.");
+
             return Post(string.Format("customers/{0}/subscription/resume", clientId)).FromJson<Subscription>();
         }
 
         public bool SubscriptionExists(string plan) {
+            if (string.IsNullOrEmpty(PublicKey))
+                throw new InvalidKeyException("PublicKey hasn't been set.");
+
             try {
                 return !string.IsNullOrEmpty(Get(string.Format("plans/{0}", plan)).FromJson<Subscription>().Id);
             } catch {
@@ -102,6 +138,9 @@ namespace Conekta {
         }
 
         public Card SwitchCard(string clientId, string tokenId) {
+            if (string.IsNullOrEmpty(PublicKey))
+                throw new InvalidKeyException("PublicKey hasn't been set.");
+
             var client = GetClient(clientId);
 
             foreach (var c in client.Cards)
@@ -113,6 +152,9 @@ namespace Conekta {
         }
 
         public bool TestCard(string cardId, float amount = 4, string currency = "MXN", string desc = "Cargo de prueba") {
+            if (string.IsNullOrEmpty(PublicKey))
+                throw new InvalidKeyException("PublicKey hasn't been set.");
+
             var charge = Charge(cardId, amount, currency, desc);
 
             if (charge.IsError)
