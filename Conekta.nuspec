@@ -4,12 +4,13 @@
      <id>Conekta</id>
      <version>$version$</version>
      <authors>Boris Scheiman</authors>
-     <licenseUrl/>
      <projectUrl>https://github.com/bscheiman/conekta</projectUrl>
-     <iconUrl/>
      <requireLicenseAcceptance>false</requireLicenseAcceptance>
      <description>Libreria .NET para Conekta. Si necesitas algun metodo en particular, avisame: @bscheiman</description>
      <summary>http://conekta.io</summary>
      <language>es-MX</language>
+     <dependencies>
+      <dependency id="ServiceStack.Text" version="3.9.71.0" />
+    </dependencies> 
    </metadata>
 </package>
