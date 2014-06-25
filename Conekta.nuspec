@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+ <package>
+   <metadata>
+     <id>Conekta</id>
+     <version></version>
+     <authors>Boris Scheiman</authors>
+     <licenseUrl/>
+     <projectUrl>https://github.com/bscheiman/conekta</projectUrl>
+     <iconUrl/>
+     <requireLicenseAcceptance>false</requireLicenseAcceptance>
+     <description>Libreria .NET para Conekta. Si necesitas algun metodo en particular, avisame: @bscheiman</description>
+     <summary>http://conekta.io</summary>
+     <language>es-MX</language>
+   </metadata>
+</package>
