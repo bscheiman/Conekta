@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConektaLib.cs" />
+    <Compile Include="InvalidKeyException.cs" />
     <Compile Include="Objects\BaseObject.cs" />
     <Compile Include="Objects\Card.cs" />
     <Compile Include="Objects\Charge.cs" />
