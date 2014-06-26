@@ -66,3 +66,5 @@ Genera un cargo de prueba para probar la tarjeta
 ## Actualizaciones
 
 Junio 26, 2014: Documentación básica. Algunos métodos todavía aceptan null, pero eso cambiara pronto.
+
+Junio 26, 2014++: Excepciones! Yay!
