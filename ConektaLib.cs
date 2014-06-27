@@ -28,8 +28,8 @@ namespace Conekta {
             if (string.IsNullOrEmpty(PublicKey))
                 throw new InvalidKeyException("PublicKey hasn't been set.");
 
-			if (string.IsNullOrEmpty(clientId))
-				throw new ArgumentNullException("clientId", "Parameter cannot be null.");
+            if (string.IsNullOrEmpty(clientId))
+                throw new ArgumentNullException("clientId", "Parameter cannot be null.");
 
             return Post(string.Format("customers/{0}/subscription/cancel", clientId)).FromJson<Subscription>();
         }
@@ -38,32 +38,32 @@ namespace Conekta {
             if (string.IsNullOrEmpty(PublicKey))
                 throw new InvalidKeyException("PublicKey hasn't been set.");
 
-			if (string.IsNullOrEmpty(clientId))
-				throw new ArgumentNullException("clientId", "Parameter cannot be null.");
+            if (string.IsNullOrEmpty(clientId))
+                throw new ArgumentNullException("clientId", "Parameter cannot be null.");
 
-			if (string.IsNullOrEmpty(clientId))
-				throw new ArgumentNullException("plan", "Parameter cannot be null.");
+            if (string.IsNullOrEmpty(clientId))
+                throw new ArgumentNullException("plan", "Parameter cannot be null.");
 
-			return Post(string.Format("customers/{0}/subscription", clientId), new {
+            return Post(string.Format("customers/{0}/subscription", clientId), new {
                 plan
             }).FromJson<Subscription>();
         }
 
-		public Charge Charge(string cardId, float amount, string currency = "MXN", string description = "Cargo Conekta") {
+        public Charge Charge(string cardId, float amount, string currency = "MXN", string description = "Cargo Conekta") {
             if (string.IsNullOrEmpty(PublicKey))
                 throw new InvalidKeyException("PublicKey hasn't been set.");
 
-			if (string.IsNullOrEmpty(cardId))
-				throw new ArgumentNullException("cardId", "Parameter cannot be null.");
+            if (string.IsNullOrEmpty(cardId))
+                throw new ArgumentNullException("cardId", "Parameter cannot be null.");
 
-			if (string.IsNullOrEmpty(currency))
-				throw new ArgumentNullException("currency", "Parameter cannot be null.");
+            if (string.IsNullOrEmpty(currency))
+                throw new ArgumentNullException("currency", "Parameter cannot be null.");
 
-			if (string.IsNullOrEmpty(description))
-				throw new ArgumentNullException("description", "Parameter cannot be null.");
+            if (string.IsNullOrEmpty(description))
+                throw new ArgumentNullException("description", "Parameter cannot be null.");
 
-			if (amount <= 0)
-				throw new ArgumentNullException("amount", "Parameter cannot be <= 0");
+            if (amount <= 0)
+                throw new ArgumentNullException("amount", "Parameter cannot be <= 0");
 
             return Post("charges", new {
                 description,
@@ -78,11 +78,11 @@ namespace Conekta {
             if (string.IsNullOrEmpty(PublicKey))
                 throw new InvalidKeyException("PublicKey hasn't been set.");
 
-			if (string.IsNullOrEmpty(name))
-				throw new ArgumentNullException("name", "Parameter cannot be null.");
+            if (string.IsNullOrEmpty(name))
+                throw new ArgumentNullException("name", "Parameter cannot be null.");
 
-			if (string.IsNullOrEmpty(email))
-				throw new ArgumentNullException("email", "Parameter cannot be null.");
+            if (string.IsNullOrEmpty(email))
+                throw new ArgumentNullException("email", "Parameter cannot be null.");
 
             return Post("customers", new {
                 name,
@@ -100,20 +100,20 @@ namespace Conekta {
             if (string.IsNullOrEmpty(PublicKey))
                 throw new InvalidKeyException("PublicKey hasn't been set.");
 
-			if (string.IsNullOrEmpty(plan))
-				throw new ArgumentNullException("plan", "Parameter cannot be null.");
+            if (string.IsNullOrEmpty(plan))
+                throw new ArgumentNullException("plan", "Parameter cannot be null.");
 
-			if (string.IsNullOrEmpty(name))
-				throw new ArgumentNullException("name", "Parameter cannot be null.");
+            if (string.IsNullOrEmpty(name))
+                throw new ArgumentNullException("name", "Parameter cannot be null.");
 
-			if (string.IsNullOrEmpty(currency))
-				throw new ArgumentNullException("currency", "Parameter cannot be null.");
+            if (string.IsNullOrEmpty(currency))
+                throw new ArgumentNullException("currency", "Parameter cannot be null.");
 
-			if (string.IsNullOrEmpty(interval))
-				throw new ArgumentNullException("interval", "Parameter cannot be null.");
+            if (string.IsNullOrEmpty(interval))
+                throw new ArgumentNullException("interval", "Parameter cannot be null.");
 
-			if (amount < 0)
-				throw new ArgumentOutOfRangeException("amount", "Parameter cannot be negative.");
+            if (amount < 0)
+                throw new ArgumentOutOfRangeException("amount", "Parameter cannot be negative.");
 
             if (SubscriptionExists(plan)) {
                 return new Subscription {
@@ -137,8 +137,8 @@ namespace Conekta {
             if (string.IsNullOrEmpty(PublicKey))
                 throw new InvalidKeyException("PublicKey hasn't been set.");
 
-			if (string.IsNullOrEmpty(clientId))
-				throw new ArgumentNullException("clientId", "Parameter cannot be null.");
+            if (string.IsNullOrEmpty(clientId))
+                throw new ArgumentNullException("clientId", "Parameter cannot be null.");
 
             return Delete(string.Format("/customers/{0}", clientId)).FromJson<ClientResponse>().Deleted;
         }
@@ -147,8 +147,8 @@ namespace Conekta {
             if (string.IsNullOrEmpty(PublicKey))
                 throw new InvalidKeyException("PublicKey hasn't been set.");
 
-			if (string.IsNullOrEmpty(clientId))
-				throw new ArgumentNullException("clientId", "Parameter cannot be null.");
+            if (string.IsNullOrEmpty(clientId))
+                throw new ArgumentNullException("clientId", "Parameter cannot be null.");
 
             return Get(string.Format("customers/{0}", clientId)).FromJson<ClientResponse>();
         }
@@ -157,8 +157,8 @@ namespace Conekta {
             if (string.IsNullOrEmpty(PublicKey))
                 throw new InvalidKeyException("PublicKey hasn't been set.");
 
-			if (string.IsNullOrEmpty(clientId))
-				throw new ArgumentNullException("clientId", "Parameter cannot be null.");
+            if (string.IsNullOrEmpty(clientId))
+                throw new ArgumentNullException("clientId", "Parameter cannot be null.");
 
             return Post(string.Format("customers/{0}/subscription/pause", clientId)).FromJson<Subscription>();
         }
@@ -167,8 +167,8 @@ namespace Conekta {
             if (string.IsNullOrEmpty(PublicKey))
                 throw new InvalidKeyException("PublicKey hasn't been set.");
 
-			if (string.IsNullOrEmpty(chargeId))
-				throw new ArgumentNullException("chargeId", "Parameter cannot be null.");
+            if (string.IsNullOrEmpty(chargeId))
+                throw new ArgumentNullException("chargeId", "Parameter cannot be null.");
 
             return Post(string.Format("charges/{0}/refund", chargeId)).FromJson<Charge>();
         }
@@ -177,8 +177,8 @@ namespace Conekta {
             if (string.IsNullOrEmpty(PublicKey))
                 throw new InvalidKeyException("PublicKey hasn't been set.");
 
-			if (string.IsNullOrEmpty(clientId))
-				throw new ArgumentNullException("clientId", "Parameter cannot be null.");
+            if (string.IsNullOrEmpty(clientId))
+                throw new ArgumentNullException("clientId", "Parameter cannot be null.");
 
             return Post(string.Format("customers/{0}/subscription/resume", clientId)).FromJson<Subscription>();
         }
@@ -187,8 +187,8 @@ namespace Conekta {
             if (string.IsNullOrEmpty(PublicKey))
                 throw new InvalidKeyException("PublicKey hasn't been set.");
 
-			if (string.IsNullOrEmpty(plan))
-				throw new ArgumentNullException("plan", "Parameter cannot be null.");
+            if (string.IsNullOrEmpty(plan))
+                throw new ArgumentNullException("plan", "Parameter cannot be null.");
 
             try {
                 return !string.IsNullOrEmpty(Get(string.Format("plans/{0}", plan)).FromJson<Subscription>().Id);
@@ -201,11 +201,11 @@ namespace Conekta {
             if (string.IsNullOrEmpty(PublicKey))
                 throw new InvalidKeyException("PublicKey hasn't been set.");
 
-			if (string.IsNullOrEmpty(clientId))
-				throw new ArgumentNullException("clientId", "Parameter cannot be null.");
+            if (string.IsNullOrEmpty(clientId))
+                throw new ArgumentNullException("clientId", "Parameter cannot be null.");
 
-			if (string.IsNullOrEmpty(tokenId))
-				throw new ArgumentNullException("tokenId", "Parameter cannot be null.");
+            if (string.IsNullOrEmpty(tokenId))
+                throw new ArgumentNullException("tokenId", "Parameter cannot be null.");
 
             var client = GetClient(clientId);
 
@@ -221,17 +221,17 @@ namespace Conekta {
             if (string.IsNullOrEmpty(PublicKey))
                 throw new InvalidKeyException("PublicKey hasn't been set.");
 
-			if (string.IsNullOrEmpty(cardId))
-				throw new ArgumentNullException("cardId", "Parameter cannot be null.");
+            if (string.IsNullOrEmpty(cardId))
+                throw new ArgumentNullException("cardId", "Parameter cannot be null.");
 
-			if (string.IsNullOrEmpty(currency))
-				throw new ArgumentNullException("currency", "Parameter cannot be null.");
+            if (string.IsNullOrEmpty(currency))
+                throw new ArgumentNullException("currency", "Parameter cannot be null.");
 
-			if (string.IsNullOrEmpty(desc))
-				throw new ArgumentNullException("desc", "Parameter cannot be null.");
+            if (string.IsNullOrEmpty(desc))
+                throw new ArgumentNullException("desc", "Parameter cannot be null.");
 
-			if (amount <= 4)
-				throw new ArgumentOutOfRangeException("amount", "Parameter cannot be <= 4.");
+            if (amount <= 4)
+                throw new ArgumentOutOfRangeException("amount", "Parameter cannot be <= 4.");
 
             var charge = Charge(cardId, amount, currency, desc);
 
