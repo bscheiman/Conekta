@@ -1,10 +1,12 @@
 ﻿#region
 using System;
 using System.ComponentModel;
+using System.Linq.Expressions;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using bscheiman.Common.Extensions;
+using Conekta.Helpers;
 using Conekta.Objects;
 using ServiceStack.Text;
 
@@ -195,6 +197,30 @@ namespace Conekta {
                 throw new ArgumentNullException("clientId");
 
             return Delete(string.Format("/customers/{0}", clientId)).FromJson<ClientResponse>().Deleted;
+        }
+
+        /// <summary>
+        /// Regresa los cargos disponibles en el backend
+        /// </summary>
+        /// <param name="tree">Árbol de búsqueda estilo LINQ (h => h.Amount == 8000)</param>
+        /// <param name="limit">Límite por llamada</param>
+        /// <param name="offset"># de página</param>
+        /// <returns></returns>
+        public Charge[] GetCharges(Expression<Func<Charge, bool>> tree = null, int limit = -1, int offset = -1) {
+            var sb = new StringBuilder();
+
+            if (tree != null)
+                ExpressionHelper.GetQuery(tree, ref sb);
+
+            if (limit >= 0)
+                sb.AppendFormat("limit={0}&", limit);
+
+            if (offset >= 0)
+                sb.AppendFormat("offset={0}&", offset);
+
+            var query = sb.ToString().TrimEnd('&');
+
+            return Get(string.Format("charges?{0}", query)).FromJson<Charge[]>();
         }
 
         /// <summary>

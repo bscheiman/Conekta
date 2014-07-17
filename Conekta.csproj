@@ -49,10 +49,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConektaLib.cs" />
+    <Compile Include="Helpers\ExpressionHelper.cs" />
     <Compile Include="InvalidKeyException.cs" />
     <Compile Include="Objects\BaseObject.cs" />
     <Compile Include="Objects\Card.cs" />
     <Compile Include="Objects\Charge.cs" />
+    <Compile Include="Objects\ChargeType.cs" />
     <Compile Include="Objects\Client.cs" />
     <Compile Include="Objects\ClientResponse.cs" />
     <Compile Include="Objects\Interval.cs" />

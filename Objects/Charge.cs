@@ -7,7 +7,7 @@ namespace Conekta.Objects {
     [DataContract]
     public class Charge : BaseObject {
         [DataMember(Name = "amount")]
-        public string Amount { get; set; }
+        public int Amount { get; set; }
 
         [DataMember(Name = "code")]
         public string Code { get; set; }
