@@ -15,6 +15,17 @@ namespace Conekta.Objects {
         [DataMember(Name = "deleted")]
         public bool Deleted { get; internal set; }
 
+        public static ClientResponse Empty {
+            get {
+                return new ClientResponse {
+                    Subscription = new Subscription {
+                        BillingCycleEnd = 0,
+                        BillingCycleStart = 0
+                    }
+                };
+            }
+        }
+
         [DataMember(Name = "livemode")]
         public bool Livemode { get; internal set; }
 
