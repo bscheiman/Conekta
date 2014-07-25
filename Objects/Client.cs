@@ -7,24 +7,27 @@ namespace Conekta.Objects {
     [DataContract]
     public class Client : BaseObject {
         [DataMember(Name = "billing_address")]
-        public string BillingAddress { get; set; }
+        public string BillingAddress { get; internal set; }
 
         [DataMember(Name = "cards")]
-        public string[] Cards { get; set; }
+        public string[] Cards { get; internal set; }
 
         [DataMember(Name = "email")]
-        public string Email { get; set; }
+        public string Email { get; internal set; }
 
         [DataMember(Name = "name")]
-        public string Name { get; set; }
+        public string Name { get; internal set; }
 
         [DataMember(Name = "phone")]
-        public string Phone { get; set; }
+        public string Phone { get; internal set; }
 
         [DataMember(Name = "plan")]
-        public string Plan { get; set; }
+        public string Plan { get; internal set; }
 
         [DataMember(Name = "shipping_address")]
-        public string ShippingAddress { get; set; }
+        public string ShippingAddress { get; internal set; }
+
+        internal Client() {
+        }
     }
 }

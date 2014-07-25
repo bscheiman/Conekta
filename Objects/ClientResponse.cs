@@ -5,29 +5,23 @@ using System.Runtime.Serialization;
 
 namespace Conekta.Objects {
     [DataContract]
-    public class ClientResponse : BaseObject {
+    public class ClientResponse : Client {
         [DataMember(Name = "cards")]
-        public Card[] Cards { get; set; }
+        public new Card[] Cards { get; set; }
 
         [DataMember(Name = "default_card")]
-        public string DefaultCard { get; set; }
+        public string DefaultCard { get; internal set; }
 
         [DataMember(Name = "deleted")]
-        public bool Deleted { get; set; }
-
-        [DataMember(Name = "email")]
-        public string Email { get; set; }
+        public bool Deleted { get; internal set; }
 
         [DataMember(Name = "livemode")]
-        public bool Livemode { get; set; }
-
-        [DataMember(Name = "name")]
-        public string Name { get; set; }
-
-        [DataMember(Name = "phone")]
-        public string Phone { get; set; }
+        public bool Livemode { get; internal set; }
 
         [DataMember(Name = "subscription")]
         public Subscription Subscription { get; set; }
+
+        internal ClientResponse() {
+        }
     }
 }
