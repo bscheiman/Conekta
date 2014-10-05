@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 
 namespace Conekta.Objects {
     [DataContract]
-    public class ClientResponse {
+    public class ClientResponse : BaseObject {
         // TODO: FIX/Refactor
         [DataMember(Name = "billing_address")]
         public string BillingAddress { get; internal set; }
