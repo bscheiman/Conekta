@@ -5,9 +5,9 @@ using System.Runtime.Serialization;
 
 namespace Conekta.Objects {
     [DataContract]
-    public class ClientResponse : Client {
+    public class ClientResponse {
         [DataMember(Name = "cards")]
-        public new Card[] Cards { get; set; }
+        public Card[] Cards { get; set; }
 
         [DataMember(Name = "default_card")]
         public string DefaultCard { get; internal set; }
