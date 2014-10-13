@@ -34,6 +34,9 @@
     <Reference Include="bscheiman.Common">
       <HintPath>packages\bscheiman.Common.1.0.0\lib\net40\bscheiman.Common.dll</HintPath>
     </Reference>
+    <Reference Include="RestSharp">
+      <HintPath>packages\RestSharp.104.4.0\lib\net4\RestSharp.dll</HintPath>
+    </Reference>
     <Reference Include="ServiceStack.Text">
       <HintPath>packages\ServiceStack.Text.3.9.71\lib\net35\ServiceStack.Text.dll</HintPath>
     </Reference>
@@ -56,8 +59,10 @@
     <Compile Include="Objects\Charge.cs" />
     <Compile Include="Objects\ChargeType.cs" />
     <Compile Include="Objects\Client.cs" />
-    <Compile Include="Objects\ClientResponse.cs" />
+    <Compile Include="Objects\Details.cs" />
     <Compile Include="Objects\Interval.cs" />
+    <Compile Include="Objects\PaymentMethod.cs" />
+    <Compile Include="Objects\Refund.cs" />
     <Compile Include="Objects\Subscription.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -4,8 +4,8 @@ using System;
 #endregion
 
 namespace Conekta {
-    public class InvalidKeyException : Exception {
-        public InvalidKeyException(string s) : base(s) {
+    internal class InvalidKeyException : Exception {
+        internal InvalidKeyException(string s) : base(s) {
         }
     }
 }

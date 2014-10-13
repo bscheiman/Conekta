@@ -1,27 +1,11 @@
-﻿#region
-using System.Runtime.Serialization;
-
-#endregion
-
-namespace Conekta.Objects {
-    [DataContract]
+﻿namespace Conekta.Objects {
     public class Card : BaseObject {
-        [DataMember(Name = "brand")]
-        public string Brand { get; internal set; }
-
-        [DataMember(Name = "exp_month")]
-        public string ExpMonth { get; internal set; }
-
-        [DataMember(Name = "exp_year")]
-        public string ExpYear { get; internal set; }
-
-        [DataMember(Name = "last4")]
-        public string Last4 { get; internal set; }
-
-        [DataMember(Name = "name")]
-        public string Name { get; internal set; }
-
-        internal Card() {
-        }
+        public bool active { get; set; }
+        public string brand { get; set; }
+        public string customer_id { get; set; }
+        public string exp_month { get; set; }
+        public string exp_year { get; set; }
+        public string last4 { get; set; }
+        public string name { get; set; }
     }
 }

@@ -7,24 +7,21 @@ namespace Conekta.Objects {
     [DataContract]
     public class Subscription : BaseObject {
         [DataMember(Name = "billing_cycle_end")]
-        public int BillingCycleEnd { get; internal set; }
+        public int BillingCycleEnd { get; set; }
 
         [DataMember(Name = "billing_cycle_start")]
-        public int BillingCycleStart { get; internal set; }
+        public int BillingCycleStart { get; set; }
 
         [DataMember(Name = "card")]
-        public string Card { get; internal set; }
+        public string Card { get; set; }
 
         [DataMember(Name = "plan")]
-        public string Plan { get; internal set; }
+        public string Plan { get; set; }
 
         [DataMember(Name = "start")]
-        public int Start { get; internal set; }
+        public int Start { get; set; }
 
         [DataMember(Name = "status")]
-        public string Status { get; internal set; }
-
-        internal Subscription() {
-        }
+        public string Status { get; set; }
     }
 }
