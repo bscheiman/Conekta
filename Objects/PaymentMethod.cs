@@ -8,8 +8,5 @@ namespace Conekta.Objects {
     public class PaymentMethod : Card {
         [DataMember(Name = "auth_code")]
         public string AuthCode { get; set; }
-
-        internal PaymentMethod() {
-        }
     }
 }

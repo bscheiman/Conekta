@@ -1,11 +1,32 @@
-﻿namespace Conekta.Objects {
+﻿#region
+using System.Runtime.Serialization;
+
+#endregion
+
+namespace Conekta.Objects {
     public class Card : BaseObject {
-        public bool active { get; set; }
-        public string brand { get; set; }
-        public string customer_id { get; set; }
-        public string exp_month { get; set; }
-        public string exp_year { get; set; }
-        public string last4 { get; set; }
-        public string name { get; set; }
+        [DataMember(Name = "Active")]
+        public bool Active { get; set; }
+
+        [DataMember(Name = "brand")]
+        public string Brand { get; set; }
+
+        [DataMember(Name = "customer_id")]
+        public string CustomerId { get; set; }
+
+        [DataMember(Name = "exp_month")]
+        public string ExpMonth { get; set; }
+
+        [DataMember(Name = "exp_year")]
+        public string ExpYear { get; set; }
+
+        [DataMember(Name = "last4")]
+        public string Last4 { get; set; }
+
+        [DataMember(Name = "name")]
+        public string Name { get; set; }
+
+        [DataMember(Name = "type")]
+        public string Type { get; set; }
     }
 }

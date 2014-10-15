@@ -54,8 +54,5 @@ namespace Conekta.Objects {
 
         [DataMember(Name = "status")]
         public string Status { get; set; }
-
-        internal Charge() {
-        }
     }
 }

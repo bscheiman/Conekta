@@ -40,6 +40,19 @@ namespace Conekta {
             });
         }
 
+        public Task<Charge> ChargeAsync(string cardId, float amount, string currency, string desc) {
+            return PostAsync<Charge>("charges", new {
+                description = desc,
+                amount = (amount * 100),
+                currency,
+                card = cardId
+            });
+        }
+
+        public Task<Charge> ChargeAsync(Card card, float amount, string currency, string desc) {
+            return ChargeAsync(card.Id, amount, currency, desc);
+        }
+
         public Task<Client> CreateClientAsync(string name, string email, string phone = null, string[] cards = null, string planId = null,
             string billingAddress = null, string shippingAddress = null, string rfc = null) {
             return PostAsync<Client>("customers", new {
