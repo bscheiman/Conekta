@@ -9,8 +9,8 @@ namespace Conekta.Objects {
         [DataMember(Name = "amount")]
         public int Amount { get; set; }
 
-        [DataMember(Name = "auth_code")]
-        public string AuthCode { get; set; }
+        [DataMember(Name = "transaction")]
+        public string Transaction { get; set; }
 
         internal Refund() {
         }
