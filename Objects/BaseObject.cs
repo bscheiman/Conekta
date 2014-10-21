@@ -22,6 +22,9 @@ namespace Conekta.Objects {
         [DataMember(Name = "message")]
         public string Message { get; set; }
 
+        [DataMember(Name = "message_to_purchaser")]
+        public string MessageToPurchaser { get; set; }
+
         [DataMember(Name = "object")]
         public string Object { get; set; }
     }

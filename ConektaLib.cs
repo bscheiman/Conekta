@@ -31,13 +31,7 @@ namespace Conekta {
         }
 
         public Task<Card> AddCardAsync(Client client, string tokenId) {
-            return PostAsync<Card>("customers/{clientId}/cards/", new {
-                token = tokenId
-            }, new Parameter {
-                Name = "clientId",
-                Value = client.Id,
-                Type = ParameterType.UrlSegment
-            });
+            return AddCardAsync(client.Id, tokenId);
         }
 
         public Task<Charge> ChargeAsync(string cardId, float amount, string currency, string desc) {
@@ -116,6 +110,18 @@ namespace Conekta {
 
         public Task<List<Client>> GetAllClientsAsync() {
             return GetAsync<List<Client>>("customers");
+        }
+
+        public Task<Refund> RefundAsync(string chargeId) {
+            return PostAsync<Refund>("charges/{chargeId}/refund", null, new Parameter {
+                Name = "chargeId",
+                Value = chargeId,
+                Type = ParameterType.UrlSegment
+            });
+        }
+
+        public Task<Refund> RefundAsync(Charge charge) {
+            return RefundAsync(charge.Id);
         }
 
         #region Helpers

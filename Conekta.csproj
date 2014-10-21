@@ -63,6 +63,7 @@
     <Compile Include="Objects\Interval.cs" />
     <Compile Include="Objects\PaymentMethod.cs" />
     <Compile Include="Objects\Refund.cs" />
+    <Compile Include="Objects\RefundDetail.cs" />
     <Compile Include="Objects\Subscription.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
