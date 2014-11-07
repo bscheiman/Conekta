@@ -1,12 +1,11 @@
 ﻿#region
-using System.Runtime.Serialization;
+using Newtonsoft.Json;
 
 #endregion
 
 namespace Conekta.Objects {
-    [DataContract]
     public class PaymentMethod : Card {
-        [DataMember(Name = "auth_code")]
+        [JsonProperty("auth_code")]
         public string AuthCode { get; set; }
     }
 }

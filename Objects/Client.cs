@@ -1,31 +1,36 @@
 #region
 using System.Collections.Generic;
-using System.Runtime.Serialization;
+using Newtonsoft.Json;
 
 #endregion
 
 namespace Conekta.Objects {
-    [DataContract]
     public class Client : BaseObject {
-        [DataMember(Name = "cards")]
-        public IList<object> Cards { get; set; }
+        [JsonProperty("cards")]
+        public IList<Card> Cards { get; set; }
 
-        [DataMember(Name = "default_card_id")]
+        [JsonProperty("default_card_id")]
         public object DefaultCardId { get; set; }
 
-        [DataMember(Name = "deleted")]
+        [JsonProperty("deleted")]
         public bool Deleted { get; set; }
 
-        [DataMember(Name = "email")]
+        [JsonProperty("email")]
         public string Email { get; set; }
 
-        [DataMember(Name = "name")]
+        [JsonProperty("name")]
         public string Name { get; set; }
 
-        [DataMember(Name = "phone")]
+        [JsonProperty("phone")]
         public string Phone { get; set; }
 
-        [DataMember(Name = "subscription")]
+        [JsonProperty("subscription")]
         public Subscription Subscription { get; set; }
+
+        public static explicit operator Client(string clientId) {
+            return new Client {
+                Id = clientId
+            };
+        }
     }
 }

@@ -1,32 +1,39 @@
 ﻿#region
 using System.Runtime.Serialization;
+using Newtonsoft.Json;
 
 #endregion
 
 namespace Conekta.Objects {
     public class Card : BaseObject {
-        [DataMember(Name = "Active")]
+        [JsonProperty("Active")]
         public bool Active { get; set; }
 
-        [DataMember(Name = "brand")]
+        [JsonProperty("brand")]
         public string Brand { get; set; }
 
-        [DataMember(Name = "customer_id")]
+        [JsonProperty("customer_id")]
         public string CustomerId { get; set; }
 
-        [DataMember(Name = "exp_month")]
+        [JsonProperty("exp_month")]
         public string ExpMonth { get; set; }
 
-        [DataMember(Name = "exp_year")]
+        [JsonProperty("exp_year")]
         public string ExpYear { get; set; }
 
-        [DataMember(Name = "last4")]
+        [JsonProperty("last4")]
         public string Last4 { get; set; }
 
-        [DataMember(Name = "name")]
+        [JsonProperty("name")]
         public string Name { get; set; }
 
-        [DataMember(Name = "type")]
+        [JsonProperty("type")]
         public string Type { get; set; }
+
+        public static explicit operator Card(string cardId) {
+            return new Card {
+                Id = cardId
+            };
+        }
     }
 }

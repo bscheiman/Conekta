@@ -1,15 +1,14 @@
 ﻿#region
-using System.Runtime.Serialization;
+using Newtonsoft.Json;
 
 #endregion
 
 namespace Conekta.Objects {
-    [DataContract]
     public class RefundDetail : BaseObject {
-        [DataMember(Name = "amount")]
+        [JsonProperty("amount")]
         public int Amount { get; set; }
 
-        [DataMember(Name = "auth_code")]
+        [JsonProperty("auth_code")]
         public string AuthCode { get; set; }
     }
 }

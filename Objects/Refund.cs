@@ -1,52 +1,51 @@
 ﻿#region
 using System.Collections.Generic;
-using System.Runtime.Serialization;
+using Newtonsoft.Json;
 
 #endregion
 
 namespace Conekta.Objects {
-    [DataContract]
     public class Refund : BaseObject {
-        [DataMember(Name = "amount")]
+        [JsonProperty("amount")]
         public int Amount { get; set; }
 
-        [DataMember(Name = "currency")]
+        [JsonProperty("currency")]
         public string Currency { get; set; }
 
-        [DataMember(Name = "customer_id")]
+        [JsonProperty("customer_id")]
         public string CustomerId { get; set; }
 
-        [DataMember(Name = "description")]
+        [JsonProperty("description")]
         public string Description { get; set; }
 
-        [DataMember(Name = "details")]
+        [JsonProperty("details")]
         public Details Details { get; set; }
 
-        [DataMember(Name = "failure_code")]
+        [JsonProperty("failure_code")]
         public object FailureCode { get; set; }
 
-        [DataMember(Name = "failure_message")]
+        [JsonProperty("failure_message")]
         public object FailureMessage { get; set; }
 
-        [DataMember(Name = "fee")]
+        [JsonProperty("fee")]
         public int Fee { get; set; }
 
-        [DataMember(Name = "monthly_installments")]
+        [JsonProperty("monthly_installments")]
         public int MonthlyInstallments { get; set; }
 
-        [DataMember(Name = "paid_at")]
+        [JsonProperty("paid_at")]
         public int PaidAt { get; set; }
 
-        [DataMember(Name = "payment_method")]
+        [JsonProperty("payment_method")]
         public PaymentMethod PaymentMethod { get; set; }
 
-        [DataMember(Name = "reference_id")]
+        [JsonProperty("reference_id")]
         public string ReferenceId { get; set; }
 
-        [DataMember(Name = "refunds")]
+        [JsonProperty("refunds")]
         public IList<RefundDetail> Refunds { get; set; }
 
-        [DataMember(Name = "status")]
+        [JsonProperty("status")]
         public string Status { get; set; }
     }
 }

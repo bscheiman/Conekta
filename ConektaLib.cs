@@ -1,9 +1,9 @@
 ﻿#region
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using bscheiman.Common.Extensions;
 using Conekta.Objects;
 using RestSharp;
-using ServiceStack.Text;
 
 #endregion
 
@@ -43,10 +43,6 @@ namespace Conekta {
             });
         }
 
-        public Task<Charge> ChargeAsync(Card card, float amount, string currency, string desc) {
-            return ChargeAsync(card.Id, amount, currency, desc);
-        }
-
         public Task<Client> CreateClientAsync(string name, string email, string phone = null, string[] cards = null, string planId = null,
             string billingAddress = null, string shippingAddress = null, string rfc = null) {
             return PostAsync<Client>("customers", new {
@@ -72,31 +68,11 @@ namespace Conekta {
             });
         }
 
-        public Task<Card> DeleteCardAsync(Client client, string cardId) {
-            return DeleteCardAsync(client, new Card {
-                Id = cardId
-            });
-        }
-
-        public Task<Card> DeleteCardAsync(string clientId, string cardId) {
-            return DeleteCardAsync(new Client {
-                Id = clientId
-            }, new Card {
-                Id = cardId
-            });
-        }
-
         public Task<Client> DeleteClientAsync(Client client) {
             return DeleteAsync<Client>("customers/{clientId}", new Parameter {
                 Name = "clientId",
                 Value = client.Id,
                 Type = ParameterType.UrlSegment
-            });
-        }
-
-        public Task<Client> DeleteClientAsync(string clientId) {
-            return DeleteClientAsync(new Client {
-                Id = clientId
             });
         }
 
@@ -112,16 +88,32 @@ namespace Conekta {
             return GetAsync<List<Client>>("customers");
         }
 
-        public Task<Refund> RefundAsync(string chargeId) {
-            return PostAsync<Refund>("charges/{chargeId}/refund", null, new Parameter {
-                Name = "chargeId",
-                Value = chargeId,
+        public Task<Client> GetClientAsync(string clientId) {
+            return GetAsync<Client>("customers/{customerId}", null, new Parameter {
+                Name = "customerId",
+                Value = clientId,
                 Type = ParameterType.UrlSegment
             });
         }
 
+        public Task<Subscription> GetSubscriptionAsync(string planId) {
+            return GetAsync<Subscription>("plans/{planId}", null, new Parameter {
+                Name = "planId",
+                Value = planId,
+                Type = ParameterType.UrlSegment
+            });
+        }
+
+        public Task<Subscription[]> GetSubscriptionsAsync() {
+            return GetAsync<Subscription[]>("plans");
+        }
+
         public Task<Refund> RefundAsync(Charge charge) {
-            return RefundAsync(charge.Id);
+            return PostAsync<Refund>("charges/{chargeId}/refund", null, new Parameter {
+                Name = "chargeId",
+                Value = charge.Id,
+                Type = ParameterType.UrlSegment
+            });
         }
 
         #region Helpers
@@ -134,7 +126,7 @@ namespace Conekta {
             return tcs.Task;
         }
 
-        internal Task<T> GetAsync<T>(string url, object obj = null, params Parameter[] parameters) where T : new() {
+        internal Task<T> GetAsync<T>(string url, object obj = null, params Parameter[] parameters) {
             var tcs = new TaskCompletionSource<T>();
             var client = GetClient(url);
 
