@@ -68,6 +68,7 @@
     <Compile Include="Objects\Refund.cs" />
     <Compile Include="Objects\RefundDetail.cs" />
     <Compile Include="Objects\Subscription.cs" />
+    <Compile Include="Objects\SubscriptionStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

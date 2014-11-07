@@ -1,5 +1,7 @@
 ﻿#region
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Threading.Tasks;
 using bscheiman.Common.Extensions;
 using Conekta.Objects;
@@ -20,26 +22,22 @@ namespace Conekta {
             PrivateKey = key;
         }
 
-        public Task<Card> AddCardAsync(string clientId, string tokenId) {
+        public Task<Card> AddCardAsync(Client client, string tokenId) {
             return PostAsync<Card>("customers/{clientId}/cards/", new {
                 token = tokenId
             }, new Parameter {
                 Name = "clientId",
-                Value = clientId,
+                Value = client.Id,
                 Type = ParameterType.UrlSegment
             });
         }
 
-        public Task<Card> AddCardAsync(Client client, string tokenId) {
-            return AddCardAsync(client.Id, tokenId);
-        }
-
-        public Task<Charge> ChargeAsync(string cardId, float amount, string currency, string desc) {
+        public Task<Charge> ChargeAsync(Card card, float amount, string currency, string desc) {
             return PostAsync<Charge>("charges", new {
                 description = desc,
                 amount = (amount * 100),
                 currency,
-                card = cardId
+                card = card.Id
             });
         }
 
@@ -53,6 +51,26 @@ namespace Conekta {
                 plan = planId,
                 billing_address = billingAddress,
                 shipping_address = shippingAddress
+            });
+        }
+
+        public async Task<Subscription> CreateSubscriptionAsync(string planId, string name, int amount, string currency = "MXN",
+            Interval interval = Interval.Month, int trial = 7, int frequency = 1, int expiry = 3) {
+            if (await SubscriptionExists(planId)) {
+                return new Subscription {
+                    Id = planId
+                };
+            }
+
+            return await PostAsync<Subscription>("plans", new {
+                id = planId,
+                name,
+                amount = amount * 100,
+                currency,
+                interval = interval.GetAttributeOfType<DescriptionAttribute>().Description,
+                frequency,
+                trial_period_days = trial,
+                expiry_count = expiry
             });
         }
 
@@ -82,6 +100,10 @@ namespace Conekta {
                 Value = client.Id,
                 Type = ParameterType.UrlSegment
             });
+        }
+
+        public Task<List<Charge>> GetAllChargesAsync() {
+            return GetAsync<List<Charge>>("charges");
         }
 
         public Task<List<Client>> GetAllClientsAsync() {
@@ -114,6 +136,55 @@ namespace Conekta {
                 Value = charge.Id,
                 Type = ParameterType.UrlSegment
             });
+        }
+
+        public Task<Subscription> SetSubscriptionStatusForClientAsync(Client clientId, SubscriptionStatus status) {
+            var statusParameter = new Parameter {
+                Name = "status",
+                Value = null,
+                Type = ParameterType.UrlSegment
+            };
+
+            switch (status) {
+                case SubscriptionStatus.Active:
+                    statusParameter.Value = "resume";
+                    break;
+
+                case SubscriptionStatus.Paused:
+                    statusParameter.Value = "pause";
+                    break;
+
+                case SubscriptionStatus.Canceled:
+                    statusParameter.Value = "cancel";
+                    break;
+            }
+
+            if (statusParameter.Value == null)
+                throw new Exception("Invalid status");
+
+            return PostAsync<Subscription>("customers/{clientId}/subscription/{status}", null, statusParameter);
+        }
+
+        private async Task<bool> SubscriptionExists(string planId) {
+            try {
+                return !string.IsNullOrEmpty((await GetAsync<Subscription>("plans/{planId}", null, new Parameter {
+                    Name = "planId",
+                    Value = planId,
+                    Type = ParameterType.UrlSegment
+                })).Id);
+            } catch {
+                return false;
+            }
+        }
+
+        public async Task<Card> SwitchCardAsync(Client client, string cardToken) {
+            if (client.Cards == null)
+                client = await GetClientAsync(client.Id);
+
+            foreach (var card in client.Cards)
+                DeleteCardAsync(client, card);
+
+            return await AddCardAsync(client, cardToken);
         }
 
         #region Helpers

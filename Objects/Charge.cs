@@ -33,9 +33,6 @@ namespace Conekta.Objects {
         [JsonProperty("fee")]
         public int Fee { get; set; }
 
-        [JsonProperty("livemode")]
-        public bool Livemode { get; set; }
-
         [JsonProperty("monthly_installments")]
         public object MonthlyInstallments { get; set; }
 
