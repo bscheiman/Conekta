@@ -51,7 +51,7 @@ namespace Conekta.Objects {
         [JsonProperty("status")]
         public string Status { get; set; }
 
-        public static explicit operator Charge(string chargeId) {
+        public static implicit operator Charge(string chargeId) {
             return new Charge {
                 Id = chargeId
             };

@@ -30,7 +30,7 @@ namespace Conekta.Objects {
         [JsonProperty("type")]
         public string Type { get; set; }
 
-        public static explicit operator Card(string cardId) {
+        public static implicit operator Card(string cardId) {
             return new Card {
                 Id = cardId
             };
