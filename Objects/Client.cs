@@ -18,6 +18,14 @@ namespace Conekta.Objects {
         [JsonProperty("email")]
         public string Email { get; set; }
 
+        public static Client Empty {
+            get {
+                return new Client {
+                    Subscription = new Subscription()
+                };
+            }
+        }
+
         [JsonProperty("name")]
         public string Name { get; set; }
 
