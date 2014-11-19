@@ -55,7 +55,7 @@ namespace Conekta {
         }
 
         public async Task<Subscription> CreateSubscriptionAsync(string planId, string name, int amount, string currency = "MXN",
-            Interval interval = Interval.Month, int trial = 7, int frequency = 1, int expiry = 3) {
+            Interval interval = Interval.Month, int trial = 7, int frequency = 1, int expiry = 0) {
             if (await SubscriptionExists(planId)) {
                 return new Subscription {
                     Id = planId
