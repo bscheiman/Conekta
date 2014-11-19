@@ -1,5 +1,4 @@
-# Conekta (.NET) [![conekta MyGet Build Status](https://www.myget.org/BuildSource/Badge/conekta?identifier=59be30f5-59fe-45a7-be8c-e45181cfb587)](https://www.myget.org/)
-
+# Conekta (.NET)
 
 
 ## Resumen
