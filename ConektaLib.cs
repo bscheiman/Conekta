@@ -138,6 +138,16 @@ namespace Conekta {
             });
         }
 
+        public Task<Subscription> SetSubscriptionForClientAsync(Client client, string planId) {
+            return PostAsync<Subscription>("customers/{clientId}/subscription", new {
+                plan = planId
+            }, new Parameter {
+                Name = "clientId",
+                Value = client.Id,
+                Type = ParameterType.UrlSegment
+            });
+        }
+
         public Task<Subscription> SetSubscriptionStatusForClientAsync(Client client, SubscriptionStatus status, string planId = "") {
             var statusParameter = new Parameter {
                 Name = "status",
@@ -236,7 +246,7 @@ namespace Conekta {
                 request.AddParameter(p);
 
             request.AddHeader("Accept", AppHeader);
-            
+
             request.AddParameter("application/json", (obj ?? new {
             }).ToJson(), ParameterType.RequestBody);
 
