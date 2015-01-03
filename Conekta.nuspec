@@ -9,5 +9,6 @@
      <description>Libreria .NET para Conekta. Si necesitas algun metodo en particular, avisame: @bscheiman</description>
      <summary>http://conekta.io</summary>
      <language>es-MX</language>
+     <tags>bscheiman scheiman boris conekta payment mexico pagos pago cobro</tags>
    </metadata>
 </package>
