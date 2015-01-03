@@ -211,6 +211,7 @@ namespace Conekta {
             return await AddCardAsync(client, cardToken);
         }
 
+        // todo: meter object
         #region Helpers
         internal Task<T> DeleteAsync<T>(string url, params Parameter[] parameters) where T : new() {
             var tcs = new TaskCompletionSource<T>();
