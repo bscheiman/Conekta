@@ -1,0 +1,240 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>bscheiman.Common</name>
+    </assembly>
+    <members>
+        <member name="M:bscheiman.Common.Extensions.ByteExtensions.ToHexString(System.Byte[],System.Boolean,System.Int32,System.String)">
+            <summary>
+            Converts a byte array to its hex string representation.
+            </summary>
+            <param name="byteArray">Byte array</param>
+            <param name="upperCase">...</param>
+            <param name="splitInGroups"></param>
+            <param name="separator"></param>
+            <returns>A hex string</returns>
+        </member>
+        <member name="M:bscheiman.Common.Extensions.EventHandlerExtensions.InvokeAsync``1(System.EventHandler{``0},System.Object,``0)">
+            <summary>
+            Invoke an event asynchronously. Each subscriber to the event will be invoked on a separate thread.
+            </summary>
+            <param name="someEvent">The event to be invoked asynchronously.</param>
+            <param name="sender">The sender of the event.</param>
+            <param name="args">The args of the event.</param>
+            <typeparam name="TEventArgs">The type of <see cref="T:System.EventArgs"/> to be used with the event.</typeparam>
+        </member>
+        <member name="M:bscheiman.Common.Extensions.EventHandlerExtensions.InvokeAsync(System.EventHandler,System.Object,System.EventArgs)">
+            <summary>
+            Invoke an event asynchronously. Each subscriber to the event will be invoked on a separate thread.
+            </summary>
+            <param name="someEvent">The event to be invoked asynchronously.</param>
+            <param name="sender">The sender of the event.</param>
+            <param name="args">The args of the event.</param>
+        </member>
+        <member name="M:bscheiman.Common.Extensions.IEnumerableExtensions.GetRandomElement``1(System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            Returns a random element from the specified list.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="list">Source list.</param>
+            <returns>Random element</returns>
+        </member>
+        <member name="M:bscheiman.Common.Extensions.StringExtensions.AsEnum``1(System.String)">
+            <summary>
+            Attempts to parse the specified string as a member of enum
+            </summary>
+            <returns>The parsed enum.</returns>
+            <param name="str">String to parse, case insensitive.</param>
+            <typeparam name="T">Type of enum</typeparam>
+        </member>
+        <member name="M:bscheiman.Common.Extensions.StringExtensions.FromHexString(System.String)">
+            <summary>
+            Returns a byte array representing the specified string. ("0000" => 0x00, 0x00)
+            </summary>
+            <returns>The hex string.</returns>
+            <param name="str">String to convert.</param>
+        </member>
+        <member name="M:bscheiman.Common.Extensions.StringExtensions.FromJson``1(System.String)">
+            <summary>
+            Converts a JSON string to its object counterpart
+            </summary>
+            <typeparam name="T">Type to deserialize</typeparam>
+            <param name="str">JSON string</param>
+            <returns>A plain ol' .NET object</returns>
+        </member>
+        <member name="M:bscheiman.Common.Extensions.StringExtensions.RemoveDiacritics(System.String)">
+            <summary>
+            Removes the diacritics from a UTF8 string. Use with caution: in Spanish, año is *VERY* different from ano.
+            </summary>
+            <returns>Diacritic-less string.</returns>
+            <param name="input">String to modify.</param>
+        </member>
+        <member name="M:bscheiman.Common.Extensions.StringExtensions.ToHMAC256(System.String,System.String)">
+            <summary>
+            Generates an HMAC SHA256 string from the specified string and key
+            </summary>
+            <returns>Hashed string, uppercase.</returns>
+            <param name="str">Source string.</param>
+            <param name="key">Key.</param>
+        </member>
+        <member name="M:bscheiman.Common.Extensions.StringExtensions.ToHMAC256(System.String,System.Byte[])">
+            <summary>
+            Generates an HMAC SHA256 string from the specified string and key
+            </summary>
+            <returns>Hashed string, uppercase.</returns>
+            <param name="str">Source string.</param>
+            <param name="key">Key.</param>
+        </member>
+        <member name="M:bscheiman.Common.Extensions.StringExtensions.ToMD5(System.String)">
+            <summary>
+            Generates an MD5 hash from the specified string
+            </summary>
+            <returns>MD5 hash, uppercase.</returns>
+            <param name="str">String.</param>
+        </member>
+        <member name="M:bscheiman.Common.Extensions.StringExtensions.ToSHA1(System.String)">
+            <summary>
+            Generates a SHA1 hash from the specified string
+            </summary>
+            <returns>SHA1 hash, uppercase.</returns>
+            <param name="str">String.</param>
+        </member>
+        <member name="M:bscheiman.Common.Extensions.StringExtensions.ToSHA256(System.String)">
+            <summary>
+            Generates a SHA256 hash from the specified string
+            </summary>
+            <returns>SHA256 hash, uppercase.</returns>
+            <param name="str">String.</param>
+        </member>
+        <member name="M:bscheiman.Common.Extensions.StringExtensions.Truncate(System.String,System.Int32,System.String)">
+            <summary>
+            Truncate the specified string according to maxLength.
+            </summary>
+            <param name="value">Value.</param>
+            <param name="maxLength">Max length.</param>
+            <param name="append">Chars to append.</param>
+        </member>
+        <member name="M:bscheiman.Common.Extensions.EnumExtensions.GetAttributeOfType``1(System.Enum)">
+            <summary>
+            Gets the first matching attribute of type T
+            </summary>
+            <returns>The attribute instance</returns>
+            <param name="enumVal">Enum</param>
+            <typeparam name="T">Enum to use</typeparam>
+        </member>
+        <member name="T:bscheiman.Common.Extensions.DateTimeExtensions">
+            <summary>
+            Originally from DateTimeExtensions @ http://datetimeextensions.codeplex.com/
+            </summary>
+        </member>
+        <member name="M:bscheiman.Common.Extensions.DateTimeExtensions.First(System.DateTime)">
+            <summary>
+            Gets a DateTime representing the first day in the current month.
+            </summary>
+            <param name="current">The current date</param>
+            <returns></returns>
+        </member>
+        <member name="M:bscheiman.Common.Extensions.DateTimeExtensions.First(System.DateTime,System.DayOfWeek)">
+            <summary>
+            Gets a DateTime representing the first specified day in the current month.
+            </summary>
+            <param name="current">The current day</param>
+            <param name="dayOfWeek">The current day of week</param>
+            <returns></returns>
+        </member>
+        <member name="M:bscheiman.Common.Extensions.DateTimeExtensions.Last(System.DateTime)">
+            <summary>
+            Gets a DateTime representing the last day in the current month.
+            </summary>
+            <param name="current">The current date</param>
+            <returns></returns>
+        </member>
+        <member name="M:bscheiman.Common.Extensions.DateTimeExtensions.Last(System.DateTime,System.DayOfWeek)">
+            <summary>
+            Gets a DateTime representing the last specified day in the current month.
+            </summary>
+            <param name="current">The current date</param>
+            <param name="dayOfWeek">The current day of week</param>
+            <returns></returns>
+        </member>
+        <member name="M:bscheiman.Common.Extensions.DateTimeExtensions.Midnight(System.DateTime)">
+            <summary>
+            Gets a DateTime representing midnight on the current date.
+            </summary>
+            <param name="current">The current date</param>
+        </member>
+        <member name="M:bscheiman.Common.Extensions.DateTimeExtensions.Next(System.DateTime,System.DayOfWeek)">
+            <summary>
+            Gets a DateTime representing the first date following the current date which falls on the given day of the week.
+            </summary>
+            <param name="current">The current date</param>
+            <param name="dayOfWeek">The day of week for the next date to get</param>
+        </member>
+        <member name="M:bscheiman.Common.Extensions.DateTimeExtensions.Noon(System.DateTime)">
+            <summary>
+            Gets a DateTime representing noon on the current date.
+            </summary>
+            <param name="current">The current date</param>
+        </member>
+        <member name="M:bscheiman.Common.Extensions.DateTimeExtensions.ToEpoch(System.DateTime)">
+            <summary>
+            Returns the specified DateTime as epoch (seconds since Jan 1, 1970)
+            </summary>
+            <returns>Epoch</returns>
+            <param name="dt">DateTime to use</param>
+        </member>
+        <member name="M:bscheiman.Common.Extensions.IntExtensions.FromEpoch(System.Int32)">
+            <summary>
+            Creates a DateTime object from the specified number of seconds
+            </summary>
+            <returns>DateTime object</returns>
+            <param name="l">Epoch</param>
+        </member>
+        <member name="M:bscheiman.Common.Extensions.LongExtensions.FromEpoch(System.Int64)">
+            <summary>
+            Creates a DateTime object from the specified number of seconds
+            </summary>
+            <returns>DateTime object</returns>
+            <param name="l">Epoch</param>
+        </member>
+        <member name="M:bscheiman.Common.Extensions.ObjectExtensions.ToFormValues(System.Object,System.String,System.Boolean)">
+            <summary>
+            Generates a FormValues representation of the object. Useful for POST queries.
+            </summary>
+            <returns>The form values.</returns>
+            <param name="request">Object to reflect.</param>
+            <param name="separator">Separator for array-based fields.</param>
+            <param name="readAndWrite">Whether to use read/write properties or only read.</param>
+        </member>
+        <member name="M:bscheiman.Common.Extensions.ObjectExtensions.ToJson(System.Object)">
+            <summary>
+            Returns a JSON version of the string
+            </summary>
+            <param name="obj">Object to serialize</param>
+            <returns>JSON string</returns>
+        </member>
+        <member name="M:bscheiman.Common.Extensions.ObjectExtensions.ToQueryString(System.Object,System.String,System.Boolean)">
+            <summary>
+            Generates a query-string-like representation of the object. Useful for REST queries.
+            </summary>
+            <returns>The query string.</returns>
+            <param name="request">Object to reflect.</param>
+            <param name="separator">Separator for array-based fields.</param>
+            <param name="readAndWrite">Whether to use read/write properties or only read.</param>
+        </member>
+        <member name="M:bscheiman.Common.Helpers.Ignore.Exception``1(System.Func{``0},``0)">
+            <summary>
+            Runs action() and returns a default value if there's an exception.
+            </summary>
+            <param name="act">Action</param>
+            <param name="def">Default value</param>
+            <typeparam name="T">Type parameter</typeparam>
+        </member>
+        <member name="M:bscheiman.Common.Helpers.Ignore.Exception(System.Action)">
+            <summary>
+            Ignores any exception.
+            </summary>
+            <param name="act">Action to execute</param>
+        </member>
+    </members>
+</doc>

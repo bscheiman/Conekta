@@ -1,7 +1,6 @@
 ﻿#region
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Threading.Tasks;
 using bscheiman.Common.Extensions;
 using Conekta.Objects;
@@ -67,7 +66,7 @@ namespace Conekta {
                 name,
                 amount = amount * 100,
                 currency,
-                interval = interval.GetAttributeOfType<DescriptionAttribute>().Description,
+                interval = interval.GetDescription(),
                 frequency,
                 trial_period_days = trial,
                 expiry_count = expiry
@@ -189,6 +188,16 @@ namespace Conekta {
             }, statusParameter);
         }
 
+        public async Task<Card> SwitchCardAsync(Client client, string cardToken) {
+            if (client.Cards == null)
+                client = await GetClientAsync(client.Id);
+
+            foreach (var card in client.Cards)
+                DeleteCardAsync(client, card);
+
+            return await AddCardAsync(client, cardToken);
+        }
+
         private async Task<bool> SubscriptionExists(string planId) {
             try {
                 return !string.IsNullOrEmpty((await GetAsync<Subscription>("plans/{planId}", null, new Parameter {
@@ -201,17 +210,6 @@ namespace Conekta {
             }
         }
 
-        public async Task<Card> SwitchCardAsync(Client client, string cardToken) {
-            if (client.Cards == null)
-                client = await GetClientAsync(client.Id);
-
-            foreach (var card in client.Cards)
-                DeleteCardAsync(client, card);
-
-            return await AddCardAsync(client, cardToken);
-        }
-
-        // todo: meter object
         #region Helpers
         internal Task<T> DeleteAsync<T>(string url, params Parameter[] parameters) where T : new() {
             var tcs = new TaskCompletionSource<T>();
