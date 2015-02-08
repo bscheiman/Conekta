@@ -1,6 +1,5 @@
 ﻿#region
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using bscheiman.Common.Extensions;
 using Conekta.Objects;
@@ -9,11 +8,19 @@ using RestSharp;
 #endregion
 
 namespace Conekta {
+    /// <summary>
+    /// Wrapper .NET para el API REST de Conekta.io.
+    /// TODOS los métodos son async. Es necesaria una leída previa a los docs de Conekta.
+    /// </summary>
     public class ConektaLib {
         private const string AppHeader = "application/vnd.conekta-v0.3.0+json";
         private const string BaseUrl = "https://api.conekta.io/";
         internal string PrivateKey { get; set; }
 
+        /// <summary>
+        /// Genera una instancia del wrapper
+        /// </summary>
+        /// <param name="key">Llave PRIVADA. Checa el sitio de administración de Conekta.</param>
         public ConektaLib(string key) {
             if (string.IsNullOrEmpty(key))
                 throw new InvalidKeyException("PrivateKey hasn't been set.");
@@ -21,6 +28,12 @@ namespace Conekta {
             PrivateKey = key;
         }
 
+        /// <summary>
+        /// Agrega una tarjeta al cliente especificado en client. Puede ser un objeto o un string id (id de Conekta)
+        /// </summary>
+        /// <param name="client">Objeto Client o string con el id</param>
+        /// <param name="tokenId">Card token</param>
+        /// <returns>Card</returns>
         public Task<Card> AddCardAsync(Client client, string tokenId) {
             return PostAsync<Card>("customers/{clientId}/cards/", new {
                 token = tokenId
@@ -31,6 +44,14 @@ namespace Conekta {
             });
         }
 
+        /// <summary>
+        /// Hace un cargo a la tarjeta especificada.
+        /// </summary>
+        /// <param name="card">Objeto card o string con el id</param>
+        /// <param name="amount">Monto en pesos (1 = $1.00); internamente se multiplica por 100</param>
+        /// <param name="currency">Moneda [USD/MXN]</param>
+        /// <param name="desc">Descripción del cargo</param>
+        /// <returns>Charge</returns>
         public Task<Charge> ChargeAsync(Card card, float amount, string currency, string desc) {
             return PostAsync<Charge>("charges", new {
                 description = desc,
@@ -40,8 +61,20 @@ namespace Conekta {
             });
         }
 
+        /// <summary>
+        /// Crea un cliente
+        /// </summary>
+        /// <param name="name">Nombre completo</param>
+        /// <param name="email">Correo</param>
+        /// <param name="phone">Teléfono (opcional)</param>
+        /// <param name="cards">Tarjetas (opcional)</param>
+        /// <param name="planId">Plan (opcional)</param>
+        /// <param name="billingAddress">Dirección (opcional)</param>
+        /// <param name="shippingAddress">Dirección de envió (opcional)</param>
+        /// <param name="rfc">RFC (opcional)</param>
+        /// <returns>Client</returns>
         public Task<Client> CreateClientAsync(string name, string email, string phone = null, string[] cards = null, string planId = null,
-            string billingAddress = null, string shippingAddress = null, string rfc = null) {
+                                              string billingAddress = null, string shippingAddress = null, string rfc = null) {
             return PostAsync<Client>("customers", new {
                 name,
                 email,
@@ -53,8 +86,21 @@ namespace Conekta {
             });
         }
 
-        public async Task<Subscription> CreateSubscriptionAsync(string planId, string name, int amount, string currency = "MXN",
-            Interval interval = Interval.Month, int trial = 7, int frequency = 1, int expiry = 0) {
+        /// <summary>
+        /// Crea una suscripcion / pago recurrente
+        /// </summary>
+        /// <param name="planId">Id del plan</param>
+        /// <param name="name">Nombre</param>
+        /// <param name="amount">Monto en pesos (1 = $1.00)</param>
+        /// <param name="currency">Moneda [USD/MXN]</param>
+        /// <param name="interval">Intervalo de cargo</param>
+        /// <param name="trial">Días de prueba</param>
+        /// <param name="frequency">Frecuencia de cargo</param>
+        /// <param name="expiry">Validez</param>
+        /// <returns>Subscription</returns>
+        public async Task<Subscription> CreateSubscriptionAsync(string planId, string name, float amount, string currency = "MXN",
+                                                                Interval interval = Interval.Month, int trial = 7, int frequency = 1,
+                                                                int expiry = 0) {
             if (await SubscriptionExists(planId)) {
                 return new Subscription {
                     Id = planId
@@ -64,7 +110,7 @@ namespace Conekta {
             return await PostAsync<Subscription>("plans", new {
                 id = planId,
                 name,
-                amount = amount * 100,
+                amount = (int) (amount * 100),
                 currency,
                 interval = interval.GetDescription(),
                 frequency,
@@ -73,6 +119,12 @@ namespace Conekta {
             });
         }
 
+        /// <summary>
+        /// Borra una tarjeta
+        /// </summary>
+        /// <param name="client">Cliente (objeto o string con id)</param>
+        /// <param name="card">Tarjeta (objeto o string con id)</param>
+        /// <returns>Card</returns>
         public Task<Card> DeleteCardAsync(Client client, Card card) {
             return DeleteAsync<Card>("customers/{clientId}/cards/{cardId}", new Parameter {
                 Name = "clientId",
@@ -85,6 +137,11 @@ namespace Conekta {
             });
         }
 
+        /// <summary>
+        /// Borra un cliente
+        /// </summary>
+        /// <param name="client">Cliente (objeto u string con id)</param>
+        /// <returns>Client</returns>
         public Task<Client> DeleteClientAsync(Client client) {
             return DeleteAsync<Client>("customers/{clientId}", new Parameter {
                 Name = "clientId",
@@ -93,22 +150,40 @@ namespace Conekta {
             });
         }
 
-        public Task<List<Card>> GetAllCardsAsync(Client client) {
-            return GetAsync<List<Card>>("customers/{clientId}/cards", null, new Parameter {
+        /// <summary>
+        /// Regresa todas las tarjetas de un cliente
+        /// </summary>
+        /// <param name="client">Cliente (objeto u string con id)</param>
+        /// <returns>Card[]</returns>
+        public Task<Card[]> GetAllCardsAsync(Client client) {
+            return GetAsync<Card[]>("customers/{clientId}/cards", null, new Parameter {
                 Name = "clientId",
                 Value = client.Id,
                 Type = ParameterType.UrlSegment
             });
         }
 
-        public Task<List<Charge>> GetAllChargesAsync() {
-            return GetAsync<List<Charge>>("charges");
+        /// <summary>
+        /// Regresa todos los cargos de un cliente
+        /// </summary>
+        /// <returns>Charge[]</returns>
+        public Task<Charge[]> GetAllChargesAsync() {
+            return GetAsync<Charge[]>("charges");
         }
 
-        public Task<List<Client>> GetAllClientsAsync() {
-            return GetAsync<List<Client>>("customers");
+        /// <summary>
+        /// Regresa todos los clientes disponibles
+        /// </summary>
+        /// <returns>Client</returns>
+        public Task<Client[]> GetAllClientsAsync() {
+            return GetAsync<Client[]>("customers");
         }
 
+        /// <summary>
+        /// Regresa información de un cliente
+        /// </summary>
+        /// <param name="clientId">Cliente (string con id)</param>
+        /// <returns>Client</returns>
         public Task<Client> GetClientAsync(string clientId) {
             return GetAsync<Client>("customers/{customerId}", null, new Parameter {
                 Name = "customerId",
@@ -117,6 +192,11 @@ namespace Conekta {
             });
         }
 
+        /// <summary>
+        /// Regresa información de una suscripción
+        /// </summary>
+        /// <param name="planId"></param>
+        /// <returns></returns>
         public Task<Subscription> GetSubscriptionAsync(string planId) {
             return GetAsync<Subscription>("plans/{planId}", null, new Parameter {
                 Name = "planId",
@@ -125,10 +205,19 @@ namespace Conekta {
             });
         }
 
+        /// <summary>
+        /// Regresa información de todas las suscripciones que existen
+        /// </summary>
+        /// <returns>Suscription[]</returns>
         public Task<Subscription[]> GetSubscriptionsAsync() {
             return GetAsync<Subscription[]>("plans");
         }
 
+        /// <summary>
+        /// Genera una devolución TOTAL del cargo especificado
+        /// </summary>
+        /// <param name="charge">Cargo a devolver (objeto o string con id)</param>
+        /// <returns>Refund</returns>
         public Task<Refund> RefundAsync(Charge charge) {
             return PostAsync<Refund>("charges/{chargeId}/refund", null, new Parameter {
                 Name = "chargeId",
@@ -137,6 +226,12 @@ namespace Conekta {
             });
         }
 
+        /// <summary>
+        /// Actualiza la suscripción para el cliente
+        /// </summary>
+        /// <param name="client">Cliente (objeto o string con id)</param>
+        /// <param name="planId">Suscripción nueva</param>
+        /// <returns></returns>
         public Task<Subscription> SetSubscriptionForClientAsync(Client client, string planId) {
             return PostAsync<Subscription>("customers/{clientId}/subscription", new {
                 plan = planId
@@ -147,6 +242,13 @@ namespace Conekta {
             });
         }
 
+        /// <summary>
+        /// Actualiza el status de la suscripción para un cliente
+        /// </summary>
+        /// <param name="client">Cliente (objeto o string con id)</param>
+        /// <param name="status">Estatus</param>
+        /// <param name="planId">Suscripción nueva</param>
+        /// <returns></returns>
         public Task<Subscription> SetSubscriptionStatusForClientAsync(Client client, SubscriptionStatus status, string planId = "") {
             var statusParameter = new Parameter {
                 Name = "status",
@@ -188,12 +290,18 @@ namespace Conekta {
             }, statusParameter);
         }
 
+        /// <summary>
+        /// Cambia la tarjeta default de un usuario. Ojo, esto borra todas las demas tarjetas.
+        /// </summary>
+        /// <param name="client">Cliente (objeto o string con id)</param>
+        /// <param name="cardToken">Token de la tarjeta</param>
+        /// <returns></returns>
         public async Task<Card> SwitchCardAsync(Client client, string cardToken) {
             if (client.Cards == null)
                 client = await GetClientAsync(client.Id);
 
             foreach (var card in client.Cards)
-                DeleteCardAsync(client, card);
+                await DeleteCardAsync(client, card);
 
             return await AddCardAsync(client, cardToken);
         }
