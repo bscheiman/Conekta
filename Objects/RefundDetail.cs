@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 namespace Conekta.Objects {
     public class RefundDetail : BaseObject {
         [JsonProperty("amount")]
-        public int Amount { get; set; }
+        public int? Amount { get; set; }
 
         [JsonProperty("auth_code")]
         public string AuthCode { get; set; }

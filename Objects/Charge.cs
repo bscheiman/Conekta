@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 namespace Conekta.Objects {
     public class Charge : BaseObject {
         [JsonProperty("amount")]
-        public int Amount { get; set; }
+        public int? Amount { get; set; }
 
         [JsonProperty("code")]
         public string Code { get; set; }
@@ -31,7 +31,7 @@ namespace Conekta.Objects {
         public string FailureMessage { get; set; }
 
         [JsonProperty("fee")]
-        public int Fee { get; set; }
+        public int? Fee { get; set; }
 
         [JsonProperty("monthly_installments")]
         public object MonthlyInstallments { get; set; }

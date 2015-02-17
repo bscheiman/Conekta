@@ -6,13 +6,13 @@ using Newtonsoft.Json;
 namespace Conekta.Objects {
     public class Subscription : BaseObject {
         [JsonProperty("amount")]
-        public int Amount { get; set; }
+        public int? Amount { get; set; }
 
         [JsonProperty("billing_cycle_end")]
-        public int BillingCycleEnd { get; set; }
+        public int? BillingCycleEnd { get; set; }
 
         [JsonProperty("billing_cycle_start")]
-        public int BillingCycleStart { get; set; }
+        public int? BillingCycleStart { get; set; }
 
         [JsonProperty("card")]
         public string Card { get; set; }
@@ -21,10 +21,10 @@ namespace Conekta.Objects {
         public string Currency { get; set; }
 
         [JsonProperty("expiry_count")]
-        public int ExpiryCount { get; set; }
+        public int? ExpiryCount { get; set; }
 
         [JsonProperty("frequency")]
-        public int Frequency { get; set; }
+        public int? Frequency { get; set; }
 
         [JsonProperty("interval")]
         public Interval Interval { get; set; }
@@ -36,12 +36,12 @@ namespace Conekta.Objects {
         public string Plan { get; set; }
 
         [JsonProperty("start")]
-        public int Start { get; set; }
+        public int? Start { get; set; }
 
         [JsonProperty("status")]
         public string Status { get; set; }
 
         [JsonProperty("trial_period_days")]
-        public int TrialPeriodDays { get; set; }
+        public int? TrialPeriodDays { get; set; }
     }
 }

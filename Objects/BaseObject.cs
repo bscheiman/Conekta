@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 namespace Conekta.Objects {
     public class BaseObject {
         [JsonProperty("created_at")]
-        public int CreatedAt { get; set; }
+        public int? CreatedAt { get; set; }
 
         [JsonProperty("id")]
         public string Id { get; set; }
