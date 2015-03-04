@@ -88,12 +88,14 @@
     <Compile Include="Objects\ChargeType.cs" />
     <Compile Include="Objects\Client.cs" />
     <Compile Include="Objects\Details.cs" />
+    <Compile Include="Objects\Event.cs" />
     <Compile Include="Objects\Interval.cs" />
     <Compile Include="Objects\PaymentMethod.cs" />
     <Compile Include="Objects\Refund.cs" />
     <Compile Include="Objects\RefundDetail.cs" />
     <Compile Include="Objects\Subscription.cs" />
     <Compile Include="Objects\SubscriptionStatus.cs" />
+    <Compile Include="Objects\Webhook.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

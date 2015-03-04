@@ -1,5 +1,7 @@
 ﻿#region
 using System;
+using System.ComponentModel;
+using System.Linq;
 using System.Threading.Tasks;
 using bscheiman.Common.Extensions;
 using Conekta.Objects;
@@ -41,6 +43,26 @@ namespace Conekta {
                 Name = "clientId",
                 Value = client.Id,
                 Type = ParameterType.UrlSegment
+            });
+        }
+
+        /// <summary>
+        /// Agrega un webhook en produccion/desarrollo
+        /// </summary>
+        /// <param name="url">URL</param>
+        /// <param name="events">Eventos a monitorear. Usa Events.All para todos.</param>
+        /// <returns>Webhook</returns>
+        public Task<Webhook> AddWebhookAsync(string url, Event events) {
+            var flags = Enum.GetValues(events.GetType()).Cast<Enum>().Where(events.HasFlag).Cast<Event>().ToArray();
+            var list = (from f in flags
+                        select f.GetAttributeOfType<DescriptionAttribute>()
+                        into description
+                        where description != null
+                        select description.Description).ToList();
+
+            return PostAsync<Webhook>("webhooks", new {
+                url,
+                events = list.ToArray()
             });
         }
 
@@ -151,6 +173,19 @@ namespace Conekta {
         }
 
         /// <summary>
+        /// Borra un webhook
+        /// </summary>
+        /// <param name="hook">Hook (hook con id, o string)</param>
+        /// <returns>Webhook</returns>
+        public Task<Webhook> DeleteWebhookAsync(Webhook hook) {
+            return DeleteAsync<Webhook>("webhooks/{hookId}", new Parameter {
+                Name = "hookId",
+                Value = hook.Id,
+                Type = ParameterType.UrlSegment
+            });
+        }
+
+        /// <summary>
         /// Regresa todas las tarjetas de un cliente
         /// </summary>
         /// <param name="client">Cliente (objeto u string con id)</param>
@@ -177,6 +212,14 @@ namespace Conekta {
         /// <returns>Client</returns>
         public Task<Client[]> GetAllClientsAsync() {
             return GetAsync<Client[]>("customers");
+        }
+
+        /// <summary>
+        /// Regresa todos los hooks disponibles
+        /// </summary>
+        /// <returns>Webhook[]</returns>
+        public Task<Webhook[]> GetAllWebhooksAsync() {
+            return GetAsync<Webhook[]>("webhooks");
         }
 
         /// <summary>
@@ -340,7 +383,7 @@ namespace Conekta {
         internal RestClient GetClient(string url) {
             var client = new RestClient(BaseUrl) {
                 Authenticator = new HttpBasicAuthenticator(PrivateKey, ""),
-                UserAgent = "Conekta.NET // @bscheiman"
+                UserAgent = "Conekta.NET"
             };
 
             return client;
