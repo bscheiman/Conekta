@@ -2,6 +2,7 @@
 using System;
 using System.ComponentModel;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using bscheiman.Common.Extensions;
 using Conekta.Objects;
@@ -349,6 +350,31 @@ namespace Conekta {
             return await AddCardAsync(client, cardToken);
         }
 
+        /// <summary>
+        /// Prueba si una llave es válida o no.
+        /// </summary>
+        /// <param name="key">Llave a probar</param>
+        /// <returns>true/false</returns>
+        public static async Task<bool> TestKey(string key) {
+            try {
+                await new ConektaLib(key).GetAsync<Client>("customers/client_noop");
+
+                return true;
+            } catch (InvalidKeyException) {
+                return false;
+            } catch {
+                return true;
+            }
+        }
+
+        /// <summary>
+        /// Prueba si la llave actual es válida o no.
+        /// </summary>
+        /// <returns>true/false</returns>
+        public Task<bool> TestKey() {
+            return TestKey(PrivateKey);
+        }
+
         private async Task<bool> SubscriptionExists(string planId) {
             try {
                 return !string.IsNullOrEmpty((await GetAsync<Subscription>("plans/{planId}", null, new Parameter {
@@ -375,7 +401,17 @@ namespace Conekta {
             var tcs = new TaskCompletionSource<T>();
             var client = GetClient(url);
 
-            client.ExecuteAsync(GetRequest(url, Method.GET, obj, parameters), response => tcs.SetResult(response.Content.FromJson<T>()));
+            client.ExecuteAsync(GetRequest(url, Method.GET, obj, parameters), response => {
+                string str = response.Content;
+                var baseObject = str.FromJson<BaseObject>();
+
+                if (response.StatusCode == HttpStatusCode.Unauthorized)
+                    tcs.SetException(new InvalidKeyException(baseObject.Message));
+                else if (response.StatusCode != HttpStatusCode.OK)
+                    tcs.SetException(new WebException(baseObject.Message));
+                else
+                    tcs.SetResult(str.FromJson<T>());
+            });
 
             return tcs.Task;
         }
