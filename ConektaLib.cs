@@ -12,8 +12,8 @@ using RestSharp;
 
 namespace Conekta {
     /// <summary>
-    /// Wrapper .NET para el API REST de Conekta.io.
-    /// TODOS los métodos son async. Es necesaria una leída previa a los docs de Conekta.
+    ///     Wrapper .NET para el API REST de Conekta.io.
+    ///     TODOS los métodos son async. Es necesaria una leída previa a los docs de Conekta.
     /// </summary>
     public class ConektaLib {
         private const string AppHeader = "application/vnd.conekta-v0.3.0+json";
@@ -21,7 +21,7 @@ namespace Conekta {
         internal string PrivateKey { get; set; }
 
         /// <summary>
-        /// Genera una instancia del wrapper
+        ///     Genera una instancia del wrapper
         /// </summary>
         /// <param name="key">Llave PRIVADA. Checa el sitio de administración de Conekta.</param>
         public ConektaLib(string key) {
@@ -32,7 +32,7 @@ namespace Conekta {
         }
 
         /// <summary>
-        /// Agrega una tarjeta al cliente especificado en client. Puede ser un objeto o un string id (id de Conekta)
+        ///     Agrega una tarjeta al cliente especificado en client. Puede ser un objeto o un string id (id de Conekta)
         /// </summary>
         /// <param name="client">Objeto Client o string con el id</param>
         /// <param name="tokenId">Card token</param>
@@ -48,7 +48,7 @@ namespace Conekta {
         }
 
         /// <summary>
-        /// Agrega un webhook en produccion/desarrollo
+        ///     Agrega un webhook en produccion/desarrollo
         /// </summary>
         /// <param name="url">URL</param>
         /// <param name="events">Eventos a monitorear. Usa Events.All para todos.</param>
@@ -68,7 +68,7 @@ namespace Conekta {
         }
 
         /// <summary>
-        /// Hace un cargo a la tarjeta especificada.
+        ///     Hace un cargo a la tarjeta especificada.
         /// </summary>
         /// <param name="card">Objeto card o string con el id</param>
         /// <param name="amount">Monto en pesos (1 = $1.00); internamente se multiplica por 100</param>
@@ -85,7 +85,27 @@ namespace Conekta {
         }
 
         /// <summary>
-        /// Crea un cliente
+        ///     Genera un cargo en OXXO
+        /// </summary>
+        /// <param name="amount">Monto</param>
+        /// <param name="currency">Moneda</param>
+        /// <param name="desc">Descripción</param>
+        /// <param name="expires">Fecha limite del cargo</param>
+        /// <returns>Objeto charge</returns>
+        public Task<Charge> ChargeOxxoAsync(float amount, string currency, string desc, DateTime expires) {
+            return PostAsync<Charge>("charges", new {
+                description = desc,
+                amount = (amount * 100),
+                currency,
+                cash = new {
+                    type = "oxxo",
+                    expires_at = expires.ToEpoch()
+                }
+            });
+        }
+
+        /// <summary>
+        ///     Crea un cliente
         /// </summary>
         /// <param name="name">Nombre completo</param>
         /// <param name="email">Correo</param>
@@ -110,7 +130,7 @@ namespace Conekta {
         }
 
         /// <summary>
-        /// Crea una suscripcion / pago recurrente
+        ///     Crea una suscripcion / pago recurrente
         /// </summary>
         /// <param name="planId">Id del plan</param>
         /// <param name="name">Nombre</param>
@@ -122,8 +142,7 @@ namespace Conekta {
         /// <param name="expiry">Validez</param>
         /// <returns>Subscription</returns>
         public async Task<Subscription> CreateSubscriptionAsync(string planId, string name, float amount, string currency = "MXN",
-                                                                Interval interval = Interval.Month, int trial = 7, int frequency = 1,
-                                                                int expiry = 0) {
+                                                                Interval interval = Interval.Month, int trial = 7, int frequency = 1, int expiry = 0) {
             if (await SubscriptionExists(planId)) {
                 return new Subscription {
                     Id = planId
@@ -143,7 +162,7 @@ namespace Conekta {
         }
 
         /// <summary>
-        /// Borra una tarjeta
+        ///     Borra una tarjeta
         /// </summary>
         /// <param name="client">Cliente (objeto o string con id)</param>
         /// <param name="card">Tarjeta (objeto o string con id)</param>
@@ -161,7 +180,7 @@ namespace Conekta {
         }
 
         /// <summary>
-        /// Borra un cliente
+        ///     Borra un cliente
         /// </summary>
         /// <param name="client">Cliente (objeto u string con id)</param>
         /// <returns>Client</returns>
@@ -174,7 +193,7 @@ namespace Conekta {
         }
 
         /// <summary>
-        /// Borra un webhook
+        ///     Borra un webhook
         /// </summary>
         /// <param name="hook">Hook (hook con id, o string)</param>
         /// <returns>Webhook</returns>
@@ -187,7 +206,7 @@ namespace Conekta {
         }
 
         /// <summary>
-        /// Regresa todas las tarjetas de un cliente
+        ///     Regresa todas las tarjetas de un cliente
         /// </summary>
         /// <param name="client">Cliente (objeto u string con id)</param>
         /// <returns>Card[]</returns>
@@ -200,7 +219,7 @@ namespace Conekta {
         }
 
         /// <summary>
-        /// Regresa todos los cargos de un cliente
+        ///     Regresa todos los cargos de un cliente
         /// </summary>
         /// <returns>Charge[]</returns>
         public Task<Charge[]> GetAllChargesAsync() {
@@ -208,7 +227,7 @@ namespace Conekta {
         }
 
         /// <summary>
-        /// Regresa todos los clientes disponibles
+        ///     Regresa todos los clientes disponibles
         /// </summary>
         /// <returns>Client</returns>
         public Task<Client[]> GetAllClientsAsync() {
@@ -216,7 +235,7 @@ namespace Conekta {
         }
 
         /// <summary>
-        /// Regresa todos los hooks disponibles
+        ///     Regresa todos los hooks disponibles
         /// </summary>
         /// <returns>Webhook[]</returns>
         public Task<Webhook[]> GetAllWebhooksAsync() {
@@ -224,7 +243,7 @@ namespace Conekta {
         }
 
         /// <summary>
-        /// Regresa información de un cliente
+        ///     Regresa información de un cliente
         /// </summary>
         /// <param name="clientId">Cliente (string con id)</param>
         /// <returns>Client</returns>
@@ -237,7 +256,7 @@ namespace Conekta {
         }
 
         /// <summary>
-        /// Regresa información de una suscripción
+        ///     Regresa información de una suscripción
         /// </summary>
         /// <param name="planId"></param>
         /// <returns></returns>
@@ -250,7 +269,7 @@ namespace Conekta {
         }
 
         /// <summary>
-        /// Regresa información de todas las suscripciones que existen
+        ///     Regresa información de todas las suscripciones que existen
         /// </summary>
         /// <returns>Suscription[]</returns>
         public Task<Subscription[]> GetSubscriptionsAsync() {
@@ -258,7 +277,7 @@ namespace Conekta {
         }
 
         /// <summary>
-        /// Genera una devolución TOTAL del cargo especificado
+        ///     Genera una devolución TOTAL del cargo especificado
         /// </summary>
         /// <param name="charge">Cargo a devolver (objeto o string con id)</param>
         /// <returns>Refund</returns>
@@ -271,7 +290,7 @@ namespace Conekta {
         }
 
         /// <summary>
-        /// Actualiza la suscripción para el cliente
+        ///     Actualiza la suscripción para el cliente
         /// </summary>
         /// <param name="client">Cliente (objeto o string con id)</param>
         /// <param name="planId">Suscripción nueva</param>
@@ -287,7 +306,7 @@ namespace Conekta {
         }
 
         /// <summary>
-        /// Actualiza el status de la suscripción para un cliente
+        ///     Actualiza el status de la suscripción para un cliente
         /// </summary>
         /// <param name="client">Cliente (objeto o string con id)</param>
         /// <param name="status">Estatus</param>
@@ -334,8 +353,20 @@ namespace Conekta {
             }, statusParameter);
         }
 
+        private async Task<bool> SubscriptionExists(string planId) {
+            try {
+                return !string.IsNullOrEmpty((await GetAsync<Subscription>("plans/{planId}", null, new Parameter {
+                    Name = "planId",
+                    Value = planId,
+                    Type = ParameterType.UrlSegment
+                })).Id);
+            } catch {
+                return false;
+            }
+        }
+
         /// <summary>
-        /// Cambia la tarjeta default de un usuario. Ojo, esto borra todas las demas tarjetas.
+        ///     Cambia la tarjeta default de un usuario. Ojo, esto borra todas las demas tarjetas.
         /// </summary>
         /// <param name="client">Cliente (objeto o string con id)</param>
         /// <param name="cardToken">Token de la tarjeta</param>
@@ -351,7 +382,7 @@ namespace Conekta {
         }
 
         /// <summary>
-        /// Prueba si una llave es válida o no.
+        ///     Prueba si una llave es válida o no.
         /// </summary>
         /// <param name="key">Llave a probar</param>
         /// <returns>true/false</returns>
@@ -368,23 +399,11 @@ namespace Conekta {
         }
 
         /// <summary>
-        /// Prueba si la llave actual es válida o no.
+        ///     Prueba si la llave actual es válida o no.
         /// </summary>
         /// <returns>true/false</returns>
         public Task<bool> TestKey() {
             return TestKey(PrivateKey);
-        }
-
-        private async Task<bool> SubscriptionExists(string planId) {
-            try {
-                return !string.IsNullOrEmpty((await GetAsync<Subscription>("plans/{planId}", null, new Parameter {
-                    Name = "planId",
-                    Value = planId,
-                    Type = ParameterType.UrlSegment
-                })).Id);
-            } catch {
-                return false;
-            }
         }
 
         #region Helpers
@@ -402,7 +421,7 @@ namespace Conekta {
             var client = GetClient(url);
 
             client.ExecuteAsync(GetRequest(url, Method.GET, obj, parameters), response => {
-                string str = response.Content;
+                var str = response.Content;
                 var baseObject = str.FromJson<BaseObject>();
 
                 if (response.StatusCode == HttpStatusCode.Unauthorized)
