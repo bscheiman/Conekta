@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{B3DF5B61-5A9C-4F11-B431-0617D4FE4936}</ProjectGuid>
+    <ProjectGuid>{E8368293-5758-42E1-8A4E-5D336FBA726E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Conekta</RootNamespace>
@@ -20,7 +20,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>bin\Debug\net40\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -29,7 +29,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>bin\Release\net40\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -79,32 +79,75 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ConektaLib.cs" />
-    <Compile Include="Helpers\ExpressionHelper.cs" />
-    <Compile Include="InvalidKeyException.cs" />
-    <Compile Include="Models\ConektaObject.cs" />
-    <Compile Include="Models\ConektaJson.cs" />
-    <Compile Include="Models\Data.cs" />
-    <Compile Include="Models\PreviousAttributes.cs" />
-    <Compile Include="Models\WebhookLog.cs" />
-    <Compile Include="Objects\BaseObject.cs" />
-    <Compile Include="Objects\Card.cs" />
-    <Compile Include="Objects\Charge.cs" />
-    <Compile Include="Objects\ChargeType.cs" />
-    <Compile Include="Objects\Client.cs" />
-    <Compile Include="Objects\Details.cs" />
-    <Compile Include="Objects\Event.cs" />
-    <Compile Include="Objects\Interval.cs" />
-    <Compile Include="Objects\PaymentMethod.cs" />
-    <Compile Include="Objects\Refund.cs" />
-    <Compile Include="Objects\RefundDetail.cs" />
-    <Compile Include="Objects\Subscription.cs" />
-    <Compile Include="Objects\SubscriptionStatus.cs" />
-    <Compile Include="Objects\Webhook.cs" />
+    <Compile Include="ConektaLib.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Helpers\ExpressionHelper.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="InvalidKeyException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\ConektaJson.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\ConektaObject.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Data.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\PreviousAttributes.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\WebhookLog.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Objects\BaseObject.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Objects\Card.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Objects\Charge.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Objects\ChargeType.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Objects\Client.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Objects\Details.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Objects\Event.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Objects\Interval.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Objects\PaymentMethod.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Objects\Refund.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Objects\RefundDetail.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Objects\Subscription.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Objects\SubscriptionStatus.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Objects\Webhook.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
