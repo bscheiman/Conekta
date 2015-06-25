@@ -16,7 +16,7 @@ namespace Conekta {
     ///     TODOS los métodos son async. Es necesaria una leída previa a los docs de Conekta.
     /// </summary>
     public class ConektaLib {
-        private const string AppHeader = "application/vnd.conekta-v0.3.0+json";
+        private const string AppHeader = "application/vnd.conekta-v1.0.0+json";
         private const string BaseUrl = "https://api.conekta.io/";
         internal string PrivateKey { get; set; }
 
@@ -81,6 +81,23 @@ namespace Conekta {
                 amount = (amount * 100),
                 currency,
                 card = card.Id
+            });
+        }
+/// <summary>
+        ///     Hace un cargo a la tarjeta especificada.
+        /// </summary>
+        /// <param name="amount">Monto en pesos (1 = $1.00); internamente se multiplica por 100</param>
+        /// <param name="currency">Moneda [USD/MXN]</param>
+        /// <param name="desc">Descripción del cargo</param>
+        /// <returns>Charge</returns>
+        public Task<Charge> SpeiChargeAsync(float amount, string currency, string desc) {
+            return PostAsync<Charge>("charges", new {
+                description = desc,
+                amount = (amount * 100),
+                currency,
+                bank = new {
+                    type = "spei"
+                }
             });
         }
 

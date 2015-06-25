@@ -8,6 +8,9 @@ namespace Conekta.Objects {
         [JsonProperty("created_at")]
         public int? CreatedAt { get; set; }
 
+        [JsonProperty("expires_at")]
+        public int ExpiresAt { get; set; }
+
         [JsonProperty("id")]
         public string Id { get; set; }
 

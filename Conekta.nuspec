@@ -10,5 +10,28 @@
      <summary>http://conekta.io</summary>
      <language>es-MX</language>
      <tags>bscheiman scheiman boris conekta payment mexico pagos pago cobro</tags>
-   </metadata>
+     <dependencies>
+       <group targetFramework="portable-net403+win8+wpa81">
+          <dependency id="Microsoft.Bcl" version="1.1.10" />
+          <dependency id="Microsoft.Bcl.Async" version="1.0.168" />
+          <dependency id="Microsoft.Bcl.Build" version="1.0.21" />
+          <dependency id="Newtonsoft.Json" version="7.0.1" />
+          <dependency id="bscheiman.Common" version="1.0.48" />
+          <dependency id="RestSharp" version="105.1.0" />
+        </group>
+        <group targetFramework="net40">
+          <dependency id="Microsoft.Bcl" version="1.1.10" />
+          <dependency id="Microsoft.Bcl.Async" version="1.0.168" />
+          <dependency id="Microsoft.Bcl.Build" version="1.0.21" />
+          <dependency id="Newtonsoft.Json" version="7.0.1" />
+          <dependency id="bscheiman.Common" version="1.0.48" />
+          <dependency id="RestSharp" version="105.1.0" />
+        </group>
+        <group targetFramework="net45">
+          <dependency id="Newtonsoft.Json" version="7.0.1" />
+          <dependency id="bscheiman.Common" version="1.0.48" />
+          <dependency id="RestSharp" version="105.1.0" />
+        </group>
+    </dependencies> 
+  </metadata>
 </package>
