@@ -9,10 +9,9 @@ using Conekta.Objects;
 namespace Conekta.Helpers {
     internal static class ExpressionHelper {
         internal static string GetBinaryExpression(BinaryExpression body) {
-            if (body.Left is BinaryExpression) {
+            if (body.Left is BinaryExpression)
                 return string.Format("{0}{1}", GetBinaryExpression(body.Left as BinaryExpression), GetBinaryExpression(body.Right as BinaryExpression));
-            }
-           
+
             if (body.Left is MemberExpression && body.Right is ConstantExpression) {
                 var name = (body.Left as MemberExpression).Member.Name.ToLower();
                 var val = (body.Right as ConstantExpression).Value;
