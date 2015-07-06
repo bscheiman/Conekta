@@ -24,9 +24,14 @@ namespace Conekta {
         ///     Genera una instancia del wrapper
         /// </summary>
         /// <param name="key">Llave PRIVADA. Checa el sitio de administración de Conekta.</param>
-        public ConektaLib(string key) {
-            if (string.IsNullOrEmpty(key))
+        public ConektaLib(string key = "") {
+            var apiKey = Environment.GetEnvironmentVariable("CONEKTA_API_KEY");
+
+            if (string.IsNullOrEmpty(key) && string.IsNullOrEmpty(apiKey))
                 throw new InvalidKeyException("PrivateKey hasn't been set.");
+
+            if (string.IsNullOrEmpty(key))
+                key = apiKey;
 
             PrivateKey = key;
         }
@@ -81,23 +86,6 @@ namespace Conekta {
                 amount = (amount * 100),
                 currency,
                 card = card.Id
-            });
-        }
-/// <summary>
-        ///     Hace un cargo a la tarjeta especificada.
-        /// </summary>
-        /// <param name="amount">Monto en pesos (1 = $1.00); internamente se multiplica por 100</param>
-        /// <param name="currency">Moneda [USD/MXN]</param>
-        /// <param name="desc">Descripción del cargo</param>
-        /// <returns>Charge</returns>
-        public Task<Charge> SpeiChargeAsync(float amount, string currency, string desc) {
-            return PostAsync<Charge>("charges", new {
-                description = desc,
-                amount = (amount * 100),
-                currency,
-                bank = new {
-                    type = "spei"
-                }
             });
         }
 
@@ -370,16 +358,22 @@ namespace Conekta {
             }, statusParameter);
         }
 
-        private async Task<bool> SubscriptionExists(string planId) {
-            try {
-                return !string.IsNullOrEmpty((await GetAsync<Subscription>("plans/{planId}", null, new Parameter {
-                    Name = "planId",
-                    Value = planId,
-                    Type = ParameterType.UrlSegment
-                })).Id);
-            } catch {
-                return false;
-            }
+        /// <summary>
+        ///     Hace un cargo a la tarjeta especificada.
+        /// </summary>
+        /// <param name="amount">Monto en pesos (1 = $1.00); internamente se multiplica por 100</param>
+        /// <param name="currency">Moneda [USD/MXN]</param>
+        /// <param name="desc">Descripción del cargo</param>
+        /// <returns>Charge</returns>
+        public Task<Charge> SpeiChargeAsync(float amount, string currency, string desc) {
+            return PostAsync<Charge>("charges", new {
+                description = desc,
+                amount = (amount * 100),
+                currency,
+                bank = new {
+                    type = "spei"
+                }
+            });
         }
 
         /// <summary>
@@ -423,6 +417,18 @@ namespace Conekta {
             return TestKey(PrivateKey);
         }
 
+        private async Task<bool> SubscriptionExists(string planId) {
+            try {
+                return !string.IsNullOrEmpty((await GetAsync<Subscription>("plans/{planId}", null, new Parameter {
+                    Name = "planId",
+                    Value = planId,
+                    Type = ParameterType.UrlSegment
+                })).Id);
+            } catch {
+                return false;
+            }
+        }
+
         #region Helpers
         internal Task<T> DeleteAsync<T>(string url, params Parameter[] parameters) where T : new() {
             var tcs = new TaskCompletionSource<T>();
@@ -439,7 +445,7 @@ namespace Conekta {
 
             client.ExecuteAsync(GetRequest(url, Method.GET, obj, parameters), response => {
                 var str = response.Content;
-                var baseObject = str.FromJson<BaseObject>();
+                var baseObject = typeof (T).IsArray ? str.FromJson<BaseObject[]>()[0] : str.FromJson<BaseObject>();
 
                 if (response.StatusCode == HttpStatusCode.Unauthorized)
                     tcs.SetException(new InvalidKeyException(baseObject.Message));

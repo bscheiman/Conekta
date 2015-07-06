@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Conekta-net40", "Conekta-ne
 		{B3DF5B61-5A9C-4F11-B431-0617D4FE4936} = {B3DF5B61-5A9C-4F11-B431-0617D4FE4936}
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Conekta.Tests", "Conekta.Tests\Conekta.Tests.csproj", "{1BB80FE7-BE07-470B-BF44-A79B078E88C7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +33,10 @@ Global
 		{E8368293-5758-42E1-8A4E-5D336FBA726E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E8368293-5758-42E1-8A4E-5D336FBA726E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E8368293-5758-42E1-8A4E-5D336FBA726E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1BB80FE7-BE07-470B-BF44-A79B078E88C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1BB80FE7-BE07-470B-BF44-A79B078E88C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1BB80FE7-BE07-470B-BF44-A79B078E88C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1BB80FE7-BE07-470B-BF44-A79B078E88C7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
