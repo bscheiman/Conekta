@@ -439,7 +439,7 @@ namespace Conekta {
 
             client.ExecuteAsync(GetRequest(url, Method.GET, obj, parameters), response => {
                 var str = response.Content;
-                var baseObject = str.FromJson<BaseObject>();
+                var baseObject = typeof(T).IsArray ? str.FromJson<BaseObject[]>()[0] : str.FromJson<BaseObject>();
 
                 if (response.StatusCode == HttpStatusCode.Unauthorized)
                     tcs.SetException(new InvalidKeyException(baseObject.Message));
