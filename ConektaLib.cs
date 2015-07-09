@@ -1,5 +1,6 @@
 ﻿#region
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Net;
@@ -79,13 +80,15 @@ namespace Conekta {
         /// <param name="amount">Monto en pesos (1 = $1.00); internamente se multiplica por 100</param>
         /// <param name="currency">Moneda [USD/MXN]</param>
         /// <param name="desc">Descripción del cargo</param>
+        /// <param name="details">Hash/diccionario opcional</param>
         /// <returns>Charge</returns>
-        public Task<Charge> ChargeAsync(Card card, float amount, string currency, string desc) {
+        public Task<Charge> ChargeAsync(Card card, float amount, string currency, string desc, Dictionary<string, object> details = null) {
             return PostAsync<Charge>("charges", new {
                 description = desc,
                 amount = (amount * 100),
                 currency,
-                card = card.Id
+                card = card.Id,
+                details = details ?? new Dictionary<string, object>()
             });
         }
 
