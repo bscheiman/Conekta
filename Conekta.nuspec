@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+    <metadata>
+        <id>Conekta</id>
+        <version>2.0.0</version>
+        <authors>Boris Scheiman</authors>
+        <projectUrl>https://github.com/bscheiman/conekta</projectUrl>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>Libreria .NET para Conekta. Si necesitas algun metodo en particular, avisame: @bscheiman</description>
+        <summary>http://conekta.io</summary>
+        <releaseNotes>2.0.0
+- Bump de versión por el cambio abismal en el código para soportar .NET 4.0 y .NET 4.5 sin tanto problema</releaseNotes>
+        <language>es-MX</language>
+        <tags>bscheiman scheiman boris conekta payment mexico pagos pago cobro</tags>
+        <dependencies>
+            <group>
+                <dependency id="Newtonsoft.Json" version="7.0.1" />
+                <dependency id="RestSharp" version="105.1.0" />
+            </group>
+            <group targetFramework=".NETFramework4.0">
+                <dependency id="Microsoft.Bcl" version="1.1.10" />
+                <dependency id="Microsoft.Bcl.Async" version="1.0.168" />
+                <dependency id="Microsoft.Bcl.Build" version="1.0.21" />
+            </group>
+            <group targetFramework=".NETFramework4.5" />
+        </dependencies>
+    </metadata>
+    <files>
+        <file src="Conekta.NET40\bin\Release\Conekta.dll" target="lib\net40\Conekta.dll" />
+        <file src="Conekta.NET45\bin\Release\Conekta.dll" target="lib\net45\Conekta.dll" />
+    </files>
+</package>
