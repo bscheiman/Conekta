@@ -17,12 +17,12 @@
                 <dependency id="Newtonsoft.Json" version="7.0.1" />
                 <dependency id="RestSharp" version="105.1.0" />
             </group>
-            <group targetFramework=".NETFramework4.0">
+            <group targetFramework="net40">
                 <dependency id="Microsoft.Bcl" version="1.1.10" />
                 <dependency id="Microsoft.Bcl.Async" version="1.0.168" />
                 <dependency id="Microsoft.Bcl.Build" version="1.0.21" />
             </group>
-            <group targetFramework=".NETFramework4.5" />
+            <group targetFramework="net45" />
         </dependencies>
     </metadata>
     <files>
