@@ -6,6 +6,9 @@ using Newtonsoft.Json;
 
 namespace Conekta.Objects {
     public class PaymentMethod : Card {
+        [JsonProperty("account_type")]
+        public string AccountType { get; set; }
+
         [JsonProperty("auth_code")]
         public string AuthCode { get; set; }
 
@@ -21,11 +24,17 @@ namespace Conekta.Objects {
         [JsonProperty("clabe")]
         public string Clabe { get; set; }
 
+        [JsonProperty("country")]
+        public string Country { get; set; }
+
         [JsonProperty("fraud_indicators")]
-        public IList<string> FraudIndicators { get; set; }
+        public IList<FraudIndicator> FraudIndicators { get; set; }
 
         [JsonProperty("fraud_score")]
-        public string FraudScore { get; set; }
+        public int? FraudScore { get; set; }
+
+        [JsonProperty("issuer")]
+        public string Issuer { get; set; }
 
         [JsonProperty("receiving_account_bank")]
         public string ReceivingAccountBank { get; set; }

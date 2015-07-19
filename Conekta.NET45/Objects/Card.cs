@@ -16,10 +16,10 @@ namespace Conekta.Objects {
         public string CustomerId { get; set; }
 
         [JsonProperty("exp_month")]
-        public string ExpMonth { get; set; }
+        public int ExpMonth { get; set; }
 
         [JsonProperty("exp_year")]
-        public string ExpYear { get; set; }
+        public int ExpYear { get; set; }
 
         [JsonProperty("last4")]
         public string Last4 { get; set; }

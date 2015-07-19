@@ -7,10 +7,7 @@ using Newtonsoft.Json;
 namespace Conekta.Objects {
     public class Charge : BaseObject {
         [JsonProperty("amount")]
-        public int? Amount { get; set; }
-
-        [JsonProperty("code")]
-        public string Code { get; set; }
+        public int Amount { get; set; }
 
         [JsonProperty("currency")]
         public string Currency { get; set; }
@@ -25,19 +22,19 @@ namespace Conekta.Objects {
         public Details Details { get; set; }
 
         [JsonProperty("failure_code")]
-        public string FailureCode { get; set; }
+        public object FailureCode { get; set; }
 
         [JsonProperty("failure_message")]
-        public string FailureMessage { get; set; }
+        public object FailureMessage { get; set; }
 
         [JsonProperty("fee")]
-        public int? Fee { get; set; }
+        public int Fee { get; set; }
 
         [JsonProperty("monthly_installments")]
         public object MonthlyInstallments { get; set; }
 
         [JsonProperty("paid_at")]
-        public int? PaidAt { get; set; }
+        public int PaidAt { get; set; }
 
         [JsonProperty("payment_method")]
         public PaymentMethod PaymentMethod { get; set; }
@@ -46,7 +43,7 @@ namespace Conekta.Objects {
         public object ReferenceId { get; set; }
 
         [JsonProperty("refunds")]
-        public IList<Refund> Refunds { get; set; }
+        public IList<object> Refunds { get; set; }
 
         [JsonProperty("status")]
         public string Status { get; set; }

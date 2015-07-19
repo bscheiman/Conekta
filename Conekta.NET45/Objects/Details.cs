@@ -10,7 +10,7 @@ namespace Conekta.Objects {
         public string Email { get; set; }
 
         [JsonProperty("line_items")]
-        public IList<object> LineItems { get; set; }
+        public IList<LineItem> LineItems { get; set; }
 
         [JsonProperty("name")]
         public string Name { get; set; }

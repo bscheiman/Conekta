@@ -5,7 +5,6 @@ using System.ComponentModel;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using bscheiman.Common.Extensions;
 using Conekta.Objects;
 using RestSharp;
 
@@ -19,6 +18,8 @@ namespace Conekta {
     public class ConektaLib {
         private const string AppHeader = "application/vnd.conekta-v1.0.0+json";
         private const string BaseUrl = "https://api.conekta.io/";
+        public const string EnvironmentKey = "CONEKTA_API_KEY";
+
         internal string PrivateKey { get; set; }
 
         /// <summary>
@@ -26,7 +27,7 @@ namespace Conekta {
         /// </summary>
         /// <param name="key">Llave PRIVADA. Checa el sitio de administración de Conekta.</param>
         public ConektaLib(string key = "") {
-            var apiKey = Environment.GetEnvironmentVariable("CONEKTA_API_KEY");
+            var apiKey = Environment.GetEnvironmentVariable(EnvironmentKey);
 
             if (string.IsNullOrEmpty(key) && string.IsNullOrEmpty(apiKey))
                 throw new InvalidKeyException("PrivateKey hasn't been set.");
@@ -80,15 +81,21 @@ namespace Conekta {
         /// <param name="amount">Monto en pesos (1 = $1.00); internamente se multiplica por 100</param>
         /// <param name="currency">Moneda [USD/MXN]</param>
         /// <param name="desc">Descripción del cargo</param>
+        /// <param name="email">Email del usuario. Forzoso desde API 1.0</param>
         /// <param name="details">Hash/diccionario opcional</param>
         /// <returns>Charge</returns>
-        public Task<Charge> ChargeAsync(Card card, float amount, string currency, string desc, Dictionary<string, object> details = null) {
+        public Task<Charge> ChargeAsync(Card card, float amount, string currency, string desc, string email, Dictionary<string, object> details = null) {
+            if (details == null)
+                details = new Dictionary<string, object>();
+
+            details["email"] = email;
+
             return PostAsync<Charge>("charges", new {
                 description = desc,
                 amount = (amount * 100),
                 currency,
                 card = card.Id,
-                details = details ?? new Dictionary<string, object>()
+                details
             });
         }
 
