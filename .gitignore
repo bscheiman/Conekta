@@ -39,5 +39,6 @@ Icon
 .Trashes
 packages/
 *.suo
-artifacts/
+artifacts/*
 msbuild.log
+artifacts/assemblies/net40/Conekta.dll
