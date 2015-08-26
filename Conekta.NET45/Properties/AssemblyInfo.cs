@@ -1,5 +1,6 @@
 ﻿#region
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 #endregion
@@ -20,3 +21,4 @@ using System.Runtime.InteropServices;
 [assembly: Guid("516d00ad-b558-46b6-872d-7d04ed114680")]
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: InternalsVisibleTo("Newtonsoft.Json")]

@@ -1,9 +1,9 @@
 ﻿#region
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 #endregion
-
 
 [assembly: AssemblyTitle("Conekta.NET40")]
 [assembly: AssemblyDescription("")]
@@ -17,3 +17,4 @@ using System.Runtime.InteropServices;
 [assembly: Guid("dec615e8-e08d-4c1c-9fe2-90f58f08a168")]
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: InternalsVisibleTo("Newtonsoft.Json")]

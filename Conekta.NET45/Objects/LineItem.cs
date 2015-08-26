@@ -15,12 +15,12 @@ namespace Conekta.Objects {
         public string Name { get; set; }
 
         [JsonProperty("quantity")]
-        public double Quantity { get; set; }
+        public double? Quantity { get; set; }
 
         [JsonProperty("sku")]
         public string Sku { get; set; }
 
         [JsonProperty("unit_price")]
-        public decimal UnitPrice { get; set; }
+        public decimal? UnitPrice { get; set; }
     }
 }

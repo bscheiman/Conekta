@@ -19,15 +19,16 @@ namespace Conekta {
         private const string AppHeader = "application/vnd.conekta-v1.0.0+json";
         private const string BaseUrl = "https://api.conekta.io/";
         public const string EnvironmentKey = "CONEKTA_API_KEY";
-
+        internal bool Debug { get; set; }
         internal string PrivateKey { get; set; }
 
         /// <summary>
         ///     Genera una instancia del wrapper
         /// </summary>
         /// <param name="key">Llave PRIVADA. Checa el sitio de administración de Conekta.</param>
-        public ConektaLib(string key = "") {
-            var apiKey = Environment.GetEnvironmentVariable(EnvironmentKey);
+        /// <param name="isDebug">Hace loggeo automatico de las respuestas de Conekta.</param>
+        public ConektaLib(string key = "", bool isDebug = false) {
+            string apiKey = Environment.GetEnvironmentVariable(EnvironmentKey);
 
             if (string.IsNullOrEmpty(key) && string.IsNullOrEmpty(apiKey))
                 throw new InvalidKeyException("PrivateKey hasn't been set.");
@@ -36,6 +37,7 @@ namespace Conekta {
                 key = apiKey;
 
             PrivateKey = key;
+            Debug = isDebug;
         }
 
         /// <summary>
@@ -84,11 +86,17 @@ namespace Conekta {
         /// <param name="email">Email del usuario. Forzoso desde API 1.0</param>
         /// <param name="details">Hash/diccionario opcional</param>
         /// <returns>Charge</returns>
-        public Task<Charge> ChargeAsync(Card card, float amount, string currency, string desc, string email, Dictionary<string, object> details = null) {
+        public Task<Charge> ChargeAsync(Card card, float amount, string currency, string desc, string email,
+                                        Dictionary<string, object> details = null) {
             if (details == null)
                 details = new Dictionary<string, object>();
 
             details["email"] = email;
+            details["line_items"] = new[] {
+                new {
+                    description = desc
+                }
+            };
 
             return PostAsync<Charge>("charges", new {
                 description = desc,
@@ -157,7 +165,8 @@ namespace Conekta {
         /// <param name="expiry">Validez</param>
         /// <returns>Subscription</returns>
         public async Task<Subscription> CreateSubscriptionAsync(string planId, string name, float amount, string currency = "MXN",
-                                                                Interval interval = Interval.Month, int trial = 7, int frequency = 1, int expiry = 0) {
+                                                                Interval interval = Interval.Month, int trial = 7, int frequency = 1,
+                                                                int expiry = 0) {
             if (await SubscriptionExists(planId)) {
                 return new Subscription {
                     Id = planId
@@ -444,7 +453,12 @@ namespace Conekta {
             var tcs = new TaskCompletionSource<T>();
             var client = GetClient(url);
 
-            client.ExecuteAsync(GetRequest(url, Method.DELETE, null, parameters), response => tcs.SetResult(response.Content.FromJson<T>()));
+            client.ExecuteAsync(GetRequest(url, Method.DELETE, null, parameters), response => {
+                if (Debug)
+                    Console.WriteLine(response.Content);
+
+                tcs.SetResult(response.Content.FromJson<T>());
+            });
 
             return tcs.Task;
         }
@@ -454,7 +468,11 @@ namespace Conekta {
             var client = GetClient(url);
 
             client.ExecuteAsync(GetRequest(url, Method.GET, obj, parameters), response => {
-                var str = response.Content;
+                string str = response.Content;
+
+                if (Debug)
+                    Console.WriteLine(str);
+
                 var baseObject = typeof (T).IsArray ? str.FromJson<BaseObject[]>()[0] : str.FromJson<BaseObject>();
 
                 if (response.StatusCode == HttpStatusCode.Unauthorized)
@@ -495,7 +513,12 @@ namespace Conekta {
             var tcs = new TaskCompletionSource<T>();
             var client = GetClient(url);
 
-            client.ExecuteAsync(GetRequest(url, Method.POST, obj, parameters), response => tcs.SetResult(response.Content.FromJson<T>()));
+            client.ExecuteAsync(GetRequest(url, Method.POST, obj, parameters), response => {
+                if (Debug)
+                    Console.WriteLine(response.Content);
+
+                tcs.SetResult(response.Content.FromJson<T>());
+            });
 
             return tcs.Task;
         }
@@ -504,7 +527,12 @@ namespace Conekta {
             var tcs = new TaskCompletionSource<T>();
             var client = GetClient(url);
 
-            client.ExecuteAsync(GetRequest(url, Method.PUT, obj, parameters), response => tcs.SetResult(response.Content.FromJson<T>()));
+            client.ExecuteAsync(GetRequest(url, Method.PUT, obj, parameters), response => {
+                if (Debug)
+                    Console.WriteLine(response.Content);
+
+                tcs.SetResult(response.Content.FromJson<T>());
+            });
 
             return tcs.Task;
         }
