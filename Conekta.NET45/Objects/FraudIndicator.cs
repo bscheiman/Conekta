@@ -10,5 +10,8 @@ namespace Conekta.Objects {
 
         [JsonProperty("weight")]
         public object Weight { get; set; }
+
+        internal FraudIndicator() {
+        }
     }
 }

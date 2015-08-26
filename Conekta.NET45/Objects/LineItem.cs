@@ -22,5 +22,8 @@ namespace Conekta.Objects {
 
         [JsonProperty("unit_price")]
         public decimal? UnitPrice { get; set; }
+
+        internal LineItem() {
+        }
     }
 }

@@ -29,5 +29,8 @@ namespace Conekta.Objects {
 
         [JsonProperty("object")]
         public string Object { get; set; }
+
+        protected internal BaseObject() {
+        }
     }
 }

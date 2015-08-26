@@ -1,5 +1,4 @@
 ﻿#region
-using System.Runtime.Serialization;
 using Newtonsoft.Json;
 
 #endregion
@@ -29,6 +28,9 @@ namespace Conekta.Objects {
 
         [JsonProperty("type")]
         public string Type { get; set; }
+
+        internal Card() {
+        }
 
         public static implicit operator Card(string cardId) {
             return new Card {

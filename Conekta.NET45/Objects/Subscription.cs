@@ -44,6 +44,9 @@ namespace Conekta.Objects {
         [JsonProperty("trial_period_days")]
         public int? TrialPeriodDays { get; set; }
 
+        internal Subscription() {
+        }
+
         public static implicit operator Subscription(string subId) {
             return new Subscription {
                 Id = subId

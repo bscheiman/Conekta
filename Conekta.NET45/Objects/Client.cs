@@ -35,6 +35,9 @@ namespace Conekta.Objects {
         [JsonProperty("subscription")]
         public Subscription Subscription { get; set; }
 
+        internal Client() {
+        }
+
         public static implicit operator Client(string clientId) {
             return new Client {
                 Id = clientId

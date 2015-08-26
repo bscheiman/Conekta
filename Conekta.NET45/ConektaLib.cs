@@ -449,9 +449,9 @@ namespace Conekta {
         }
 
         #region Helpers
-        internal Task<T> DeleteAsync<T>(string url, params Parameter[] parameters) where T : new() {
+        private Task<T> DeleteAsync<T>(string url, params Parameter[] parameters) where T : BaseObject {
             var tcs = new TaskCompletionSource<T>();
-            var client = GetClient(url);
+            var client = GetClient();
 
             client.ExecuteAsync(GetRequest(url, Method.DELETE, null, parameters), response => {
                 if (Debug)
@@ -463,9 +463,9 @@ namespace Conekta {
             return tcs.Task;
         }
 
-        internal Task<T> GetAsync<T>(string url, object obj = null, params Parameter[] parameters) {
+        private Task<T> GetAsync<T>(string url, object obj = null, params Parameter[] parameters) {
             var tcs = new TaskCompletionSource<T>();
-            var client = GetClient(url);
+            var client = GetClient();
 
             client.ExecuteAsync(GetRequest(url, Method.GET, obj, parameters), response => {
                 string str = response.Content;
@@ -486,7 +486,7 @@ namespace Conekta {
             return tcs.Task;
         }
 
-        internal RestClient GetClient(string url) {
+        private RestClient GetClient() {
             var client = new RestClient(BaseUrl) {
                 Authenticator = new HttpBasicAuthenticator(PrivateKey, ""),
                 UserAgent = "Conekta.NET"
@@ -495,7 +495,7 @@ namespace Conekta {
             return client;
         }
 
-        internal RestRequest GetRequest(string url, Method method, object obj, params Parameter[] parameters) {
+        private RestRequest GetRequest(string url, Method method, object obj, params Parameter[] parameters) {
             var request = new RestRequest(url, method);
 
             foreach (var p in parameters)
@@ -509,9 +509,9 @@ namespace Conekta {
             return request;
         }
 
-        internal Task<T> PostAsync<T>(string url, object obj, params Parameter[] parameters) where T : new() {
+        private Task<T> PostAsync<T>(string url, object obj, params Parameter[] parameters) where T : BaseObject {
             var tcs = new TaskCompletionSource<T>();
-            var client = GetClient(url);
+            var client = GetClient();
 
             client.ExecuteAsync(GetRequest(url, Method.POST, obj, parameters), response => {
                 if (Debug)
@@ -523,9 +523,9 @@ namespace Conekta {
             return tcs.Task;
         }
 
-        internal Task<T> PutAsync<T>(string url, object obj, params Parameter[] parameters) where T : new() {
+        public Task<T> PutAsync<T>(string url, object obj, params Parameter[] parameters) where T : BaseObject {
             var tcs = new TaskCompletionSource<T>();
-            var client = GetClient(url);
+            var client = GetClient();
 
             client.ExecuteAsync(GetRequest(url, Method.PUT, obj, parameters), response => {
                 if (Debug)

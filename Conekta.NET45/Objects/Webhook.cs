@@ -21,6 +21,9 @@ namespace Conekta.Objects {
         [JsonProperty("url")]
         public string Url { get; set; }
 
+        internal Webhook() {
+        }
+
         public static implicit operator Webhook(string hookId) {
             return new Webhook {
                 Id = hookId

@@ -47,5 +47,8 @@ namespace Conekta.Objects {
 
         [JsonProperty("status")]
         public string Status { get; set; }
+
+        internal Refund() {
+        }
     }
 }

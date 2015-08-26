@@ -10,5 +10,8 @@ namespace Conekta.Objects {
 
         [JsonProperty("auth_code")]
         public string AuthCode { get; set; }
+
+        internal RefundDetail() {
+        }
     }
 }

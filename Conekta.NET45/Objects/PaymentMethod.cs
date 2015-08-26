@@ -41,5 +41,8 @@ namespace Conekta.Objects {
 
         [JsonProperty("receiving_account_number")]
         public string ReceivingAccountNumber { get; set; }
+
+        internal PaymentMethod() {
+        }
     }
 }
