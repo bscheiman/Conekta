@@ -34,7 +34,7 @@ namespace Conekta.Objects {
         public object MonthlyInstallments { get; set; }
 
         [JsonProperty("paid_at")]
-        public int PaidAt { get; set; }
+        public int? PaidAt { get; set; }
 
         [JsonProperty("payment_method")]
         public PaymentMethod PaymentMethod { get; set; }

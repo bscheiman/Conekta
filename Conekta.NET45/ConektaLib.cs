@@ -7,6 +7,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Conekta.Objects;
 using RestSharp;
+using RestSharp.Authenticators;
 
 #endregion
 
@@ -86,7 +87,7 @@ namespace Conekta {
         /// <param name="email">Email del usuario. Forzoso desde API 1.0</param>
         /// <param name="details">Hash/diccionario opcional</param>
         /// <returns>Charge</returns>
-        public Task<Charge> ChargeAsync(Card card, float amount, string currency, string desc, string email,
+        public Task<Charge> ChargeAsync(Card card, decimal amount, string currency, string desc, string email,
                                         Dictionary<string, object> details = null) {
             if (details == null)
                 details = new Dictionary<string, object>();
@@ -115,7 +116,7 @@ namespace Conekta {
         /// <param name="desc">Descripción</param>
         /// <param name="expires">Fecha limite del cargo</param>
         /// <returns>Objeto charge</returns>
-        public Task<Charge> ChargeOxxoAsync(float amount, string currency, string desc, DateTime expires) {
+        public Task<Charge> ChargeOxxoAsync(decimal amount, string currency, string desc, DateTime expires) {
             return PostAsync<Charge>("charges", new {
                 description = desc,
                 amount = (amount * 100),
@@ -164,7 +165,7 @@ namespace Conekta {
         /// <param name="frequency">Frecuencia de cargo</param>
         /// <param name="expiry">Validez</param>
         /// <returns>Subscription</returns>
-        public async Task<Subscription> CreateSubscriptionAsync(string planId, string name, float amount, string currency = "MXN",
+        public async Task<Subscription> CreateSubscriptionAsync(string planId, string name, decimal amount, string currency = "MXN",
                                                                 Interval interval = Interval.Month, int trial = 7, int frequency = 1,
                                                                 int expiry = 0) {
             if (await SubscriptionExists(planId)) {
@@ -384,7 +385,7 @@ namespace Conekta {
         /// <param name="currency">Moneda [USD/MXN]</param>
         /// <param name="desc">Descripción del cargo</param>
         /// <returns>Charge</returns>
-        public Task<Charge> SpeiChargeAsync(float amount, string currency, string desc) {
+        public Task<Charge> SpeiChargeAsync(decimal amount, string currency, string desc) {
             return PostAsync<Charge>("charges", new {
                 description = desc,
                 amount = (amount * 100),
