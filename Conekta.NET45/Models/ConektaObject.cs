@@ -6,10 +6,10 @@ using Newtonsoft.Json;
 namespace Conekta.Models {
     public class ConektaObject {
         [JsonProperty("billing_cycle_end")]
-        public int BillingCycleEnd { get; set; }
+        public int? BillingCycleEnd { get; set; }
 
         [JsonProperty("billing_cycle_start")]
-        public int BillingCycleStart { get; set; }
+        public int? BillingCycleStart { get; set; }
 
         [JsonProperty("card_id")]
         public string CardId { get; set; }
