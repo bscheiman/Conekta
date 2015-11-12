@@ -85,19 +85,23 @@ namespace Conekta {
         /// <param name="currency">Moneda [USD/MXN]</param>
         /// <param name="desc">Descripción del cargo</param>
         /// <param name="email">Email del usuario. Forzoso desde API 1.0</param>
-        /// <param name="details">Hash/diccionario opcional</param>
+        /// <param name="details">Hash/diccionario opcional; datos del cliente</param>
+        /// <param name="lineItems">Hash/diccionario de lineItems; datos de articulos. NO TIENES QUE AGREGARLO A DETAILS.</param>
         /// <returns>Charge</returns>
         public Task<Charge> ChargeAsync(Card card, decimal amount, string currency, string desc, string email,
-                                        Dictionary<string, object> details = null) {
+                                        Dictionary<string, object> details = null, params Dictionary<string, object>[] lineItems) {
             if (details == null)
                 details = new Dictionary<string, object>();
 
+            var finalLineItems = new List<Dictionary<string, object>>();
+
+            foreach (var d in finalLineItems) {
+                if (!d.ContainsKey("description"))
+                    d["description"] = desc;
+            }
+
             details["email"] = email;
-            details["line_items"] = new[] {
-                new {
-                    description = desc
-                }
-            };
+            details["line_items"] = finalLineItems;
 
             return PostAsync<Charge>("charges", new {
                 description = desc,

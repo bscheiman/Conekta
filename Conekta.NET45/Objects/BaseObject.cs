@@ -9,17 +9,15 @@ namespace Conekta.Objects {
         public int? CreatedAt { get; set; }
 
         [JsonProperty("expires_at")]
-        public int ExpiresAt { get; set; }
+        public int? ExpiresAt { get; set; }
 
         [JsonProperty("id")]
         public string Id { get; set; }
 
-        public bool IsError {
-            get { return Object == "error"; }
-        }
+        public bool IsError => Object == "error";
 
         [JsonProperty("livemode")]
-        public bool LiveMode { get; set; }
+        public bool? LiveMode { get; set; }
 
         [JsonProperty("message")]
         public string Message { get; set; }

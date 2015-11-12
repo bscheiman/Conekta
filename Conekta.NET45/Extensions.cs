@@ -1,5 +1,6 @@
 ﻿#region
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using Newtonsoft.Json;
@@ -19,7 +20,7 @@ namespace Conekta {
 
         public static TAttribute GetAttributeOfType<TAttribute>(this Enum enumVal) where TAttribute : Attribute {
             var type = enumVal.GetType();
-            var name = Enum.GetName(type, enumVal);
+            string name = Enum.GetName(type, enumVal);
 
             return type.GetField(name).GetCustomAttributes(false).OfType<TAttribute>().SingleOrDefault();
         }
@@ -30,6 +31,10 @@ namespace Conekta {
             } catch {
                 return "";
             }
+        }
+
+        public static Dictionary<string, object> Merge(this Dictionary<string, object> d1, Dictionary<string, object> d2) {
+            return d1.Concat(d2).GroupBy(p => p.Key).ToDictionary(g => g.Key, g => g.Last().Value);
         }
 
         public static long ToEpoch(this DateTime dt) {
