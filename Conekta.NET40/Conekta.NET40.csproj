@@ -160,6 +160,7 @@
     <Compile Include="..\Conekta.NET45\Objects\Webhook.cs">
       <Link>Objects\Webhook.cs</Link>
     </Compile>
+    <Compile Include="Objects\MonthlyInstallment.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

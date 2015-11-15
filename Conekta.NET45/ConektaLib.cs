@@ -113,6 +113,49 @@ namespace Conekta {
         }
 
         /// <summary>
+        ///     Hace un cargo a la tarjeta especificada.
+        /// </summary>
+        /// <param name="card">Objeto card o string con el id</param>
+        /// <param name="amount">Monto en pesos (1 = $1.00); internamente se multiplica por 100</param>
+        /// <param name="currency">Moneda [USD/MXN]</param>
+        /// <param name="desc">Descripción del cargo</param>
+        /// <param name="email">Email del usuario. Forzoso desde API 1.0</param>
+        /// <param name="details">Hash/diccionario opcional; datos del cliente</param>
+        /// <param name="monthlyInstallment">Enum para aplicar cargo a meses sin intereses</param>
+        /// <param name="lineItems">Hash/diccionario de lineItems; datos de articulos. NO TIENES QUE AGREGARLO A DETAILS.</param>
+        /// <returns>Charge</returns>
+        public Task<Charge> ChargeWithMonthlyInstallmentAsync(Card card, decimal amount, string currency, string desc, string email,
+                                        Dictionary<string, object> details = null,
+                                        MonthlyInstallment monthlyInstallment = MonthlyInstallment.None,
+                                        params Dictionary<string, object>[] lineItems)
+        {
+
+            if (details == null)
+                details = new Dictionary<string, object>();
+
+            var finalLineItems = new List<Dictionary<string, object>>();
+
+            foreach (var d in finalLineItems)
+            {
+                if (!d.ContainsKey("description"))
+                    d["description"] = desc;
+            }
+
+            details["email"] = email;
+            details["line_items"] = finalLineItems;
+
+            return PostAsync<Charge>("charges",  new
+                {
+                    description = desc,
+                    amount = (amount * 100),
+                    currency,
+                    card = card.Id,
+                    details,
+                    monthly_installments = (int)monthlyInstallment
+                });
+        }
+
+        /// <summary>
         ///     Genera un cargo en OXXO
         /// </summary>
         /// <param name="amount">Monto</param>
