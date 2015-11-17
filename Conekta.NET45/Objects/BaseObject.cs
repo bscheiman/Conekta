@@ -3,10 +3,8 @@ using Newtonsoft.Json;
 
 #endregion
 
-namespace Conekta.Objects
-{
-    public class BaseObject
-    {
+namespace Conekta.Objects {
+    public class BaseObject {
         [JsonProperty("created_at")]
         public int? CreatedAt { get; set; }
 
@@ -16,12 +14,8 @@ namespace Conekta.Objects
         [JsonProperty("id")]
         public string Id { get; set; }
 
-        public bool IsError
-        {
-            get
-            {
-                return Object == "error";
-            }
+        public bool IsError {
+            get { return Object == "error"; }
         }
 
         [JsonProperty("livemode")]
@@ -36,8 +30,7 @@ namespace Conekta.Objects
         [JsonProperty("object")]
         public string Object { get; set; }
 
-        protected internal BaseObject()
-        {
+        protected internal BaseObject() {
         }
     }
 }

@@ -1,7 +1,5 @@
-﻿namespace Conekta.Objects
-{
-    public enum MonthlyInstallment
-    {
+﻿namespace Conekta.Objects {
+    public enum MonthlyInstallment {
         None = 0,
         ThreeMonths = 3,
         SixMonths = 6,
