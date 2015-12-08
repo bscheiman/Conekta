@@ -93,13 +93,11 @@ namespace Conekta {
             if (details == null)
                 details = new Dictionary<string, object>();
 
-            var finalLineItems = new List<Dictionary<string, object>>();
-
-            foreach (var d in finalLineItems.Where(d => !d.ContainsKey("description")))
+            foreach (var d in lineItems.Where(d => !d.ContainsKey("description")))
                 d["description"] = desc;
 
             details["email"] = email;
-            details["line_items"] = finalLineItems;
+            details["line_items"] = lineItems.ToList();
 
             return PostAsync<Charge>("charges", new {
                 description = desc,
